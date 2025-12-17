@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %} Default Title {% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='dist/main.css')}}"
+    />
+  </head>
+
+  <body>
+    <nav
+      class="bg-[#3b3939] text-white flex items-center fixed w-full md:h-[80px] md:justify-evenly md:flex hidden md:text-2xl"
+    >
+      <div class="h-full flex justify-center items-center relative">
+        <a href="#" class="h-full flex items-center pr-2">
+          <img src="https://i.ibb.co/Q3bLVMg7/logo.png" alt="logo" border="0" />
+        </a>
+      </div>
+
+      <div
+        id="nav-menu"
+        class="h-full flex justify-center items-center text-2xl"
+      >
+        <a
+          href="#"
+          class="text-base py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out"
+          >Home</a
+        >
+        <a
+          href="#"
+          class="text-base py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out"
+          >Features</a
+        >
+        <a
+          href="#"
+          class="text-base py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out"
+          >How to Use</a
+        >
+        <a
+          href="#"
+          class="text-base py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out"
+          >Developers</a
+        >
+      </div>
+
+      <div id="auth" class="flex gap-[10px] mr-[0px] relative">
+        <a
+          href="#"
+          class="py-[4px] w-[105px] text-center rounded-[50px] text-base flex justify-center items-center bg-[#029c75] border-2 border-[#029c75] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
+          >Login</a
+        >
+        <a
+          href="#"
+          class="py-[4px] w-[105px] text-center rounded-[50px] text-base flex justify-center items-center bg-[#8624ff] border-2 border-[#8624ff] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
+          >Register</a
+        >
+      </div>
+
+      <button
+        id="hamburger-btn"
+        class="bg-blue-500 cursor-pointer p-[20px] md:hidden"
+        onclick="handleMenu()"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </nav>
+
+    <!--Mobile Navbar-->
+    <nav class="fixed md:hidden flex bg-[#3b3939] flex-col text-white w-full">
+      <div
+        id="navTop"
+        class="flex justify-between bg-[#3b3939] md:hidden border-black fixed w-full top-0 h-[80px]"
+      >
+        <a
+          href="#"
+          class="p-[20px] relative left-[40px] h-full flex items-center"
+        >
+          <img
+            src="https://i.ibb.co/Q3bLVMg7/logo.png"
+            alt="Logo"
+            id="logo-image"
+          />
+        </a>
+        <button
+          id="hamburger-btn"
+          class="cursor-pointer p-[20px] md:hidden relative right-[40px] flex items-center"
+          onclick="handleMenu()"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+
+      <div
+        id="navContent"
+        class="w-full bg-[#3b3939] flex flex-col hidden fixed inset-0 justify-center"
+      >
+        <div
+          id="navTop"
+          class="flex justify-between bg-[#3b3939] md:hidden border-black fixed w-full top-0 h-[80px]"
+        >
+          <a
+            href="#"
+            class="p-[20px] h-full flex items-center relative left-[40px]"
+          >
+            <img
+              src="https://i.ibb.co/Q3bLVMg7/logo.png"
+              alt="Logo"
+              id="logo-image"
+            />
+          </a>
+          <button
+            id="hamburger-btn"
+            class="cursor-pointer p-[20px] md:hidden relative right-[40px] flex items-center"
+            onclick="handleMenu()"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div id="openedNavContent" class="bg-yellow-00 flex flex-col">
+          <div id="navMiddle" class="w-full">
+            <a
+              href="#"
+              class="border-t-1 border-[#5d5c5e] text-base py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out w-full flex justify-center mb-[0px]"
+              >Home</a
+            >
+            <a
+              href="#"
+              class="border-t-1 border-[#5d5c5e] text-base py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out w-full flex justify-center mb-[0px]"
+              >Features</a
+            >
+            <a
+              href="#"
+              class="border-b-1 border-t-1 border-[#5d5c5e] text-base py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out w-full flex justify-center mb-[0px]"
+              >How to Use</a
+            >
+            <a
+              href="#"
+              class="border-b-1 border-[#5d5c5e] text-base py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out w-full flex justify-center mb-[0px]"
+              >Developers</a
+            >
+          </div>
+
+          <div
+            id="navBottom"
+            class="flex gap-[15px] justify-center relative items-center relative w-full mt-[42px]"
+          >
+            <a
+              href="#"
+              class="py-[4px] w-[105px] text-center rounded-[50px] text-base flex justify-center items-center bg-[#029c75] border-2 border-[#029c75] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
+              >Login</a
+            >
+            <a
+              href="#"
+              class="py-[4px] w-[105px] text-center rounded-[50px] text-base flex justify-center items-center bg-[#8624ff] border-2 border-[#8624ff] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
+              >Register</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+  </body>
+
+  {% block content %} {% endblock %}
+  <script
+    src="https://kit.fontawesome.com/a3d72c8bc7.js"
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    const handleMenu = () => {
+      const navContent = document.getElementById("navContent");
+      navContent.classList.toggle("hidden");
+    };
+  </script>
+</html>

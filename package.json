@@ -1,0 +1,25 @@
+{
+  "name": "fundwarden",
+  "version": "1.0.0",
+  "description": "About The complete Codebase for Fundwarden - A Budget Allocator and Expense Tracking Application for your Personal Finance. Made for CS50x Final Project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tailwind": "npx @tailwindcss/cli -i app/static/src/input.css -o app/static/dist/main.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sonu64/Fundwarden.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sonu64/Fundwarden/issues"
+  },
+  "homepage": "https://github.com/Sonu64/Fundwarden#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.18",
+    "tailwindcss": "^4.1.18"
+  }
+}
