@@ -24,6 +24,9 @@
     @apply flex flex-col;
     @apply text-general;
   }
+  .register-card {
+    @apply h-[433px] max-h-[433px];
+  }
   .formContent {
     @apply flex flex-col gap-4 py-4 h-full justify-evenly;
   }
