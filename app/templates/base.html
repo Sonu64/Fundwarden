@@ -8,11 +8,17 @@
       rel="stylesheet"
       href="{{url_for('static',filename='dist/main.css')}}"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Figtree:ital,wght@0,300..900;1,300..900&family=Onest:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
-  <body>
+  <body class="font-DMSans bg-bodyDark">
     <nav
-      class="bg-[#3b3939] text-white flex items-center fixed w-full md:h-[80px] md:justify-evenly md:flex hidden md:text-2xl"
+      class="bg-primaryDark text-white flex items-center fixed w-full md:h-[70px] md:justify-evenly md:flex hidden md:text-2xl top-0"
     >
       <div class="h-full flex justify-center items-center relative">
         <a href="#" class="h-full flex items-center pr-2">
@@ -54,7 +60,7 @@
         >
         <a
           href="#"
-          class="py-[4px] w-[105px] text-center rounded-[50px] text-base flex justify-center items-center bg-[#8624ff] border-2 border-[#8624ff] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
+          class="py-[4px] w-[105px] text-center rounded-[50px] text-base flex justify-center items-center bg-indigo-700 border-2 border-indigo-700 hover:bg-transparent transition delay-50 duration-300 ease-in-out"
           >Register</a
         >
       </div>
@@ -69,7 +75,9 @@
     </nav>
 
     <!--Mobile Navbar-->
-    <nav class="fixed md:hidden flex bg-[#3b3939] flex-col text-white w-full">
+    <nav
+      class="fixed md:hidden flex bg-[#3b3939] flex-col text-white w-full z-10"
+    >
       <div
         id="navTop"
         class="flex justify-between bg-[#3b3939] md:hidden border-black fixed w-full top-0 h-[80px]"
@@ -162,9 +170,10 @@
         </div>
       </div>
     </nav>
+
+    <main class="">{% block content %} {% endblock %}</main>
   </body>
 
-  {% block content %} {% endblock %}
   <script
     src="https://kit.fontawesome.com/a3d72c8bc7.js"
     crossorigin="anonymous"

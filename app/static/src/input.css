@@ -1,3 +1,51 @@
 /* app/static/src/input.css */
 
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primaryDark: #3b3939;
+  --height-pcNavHeight: 80px;
+  --color-bodyDark: #151b23;
+  --color-cardDark: rgb(51, 50, 50);
+  --color-inputDark: #474747;
+  --text-tiny: 13px;
+  --text-general: 15px;
+  --radius-card: 0.5rem;
+  --font-DMSans: "DM Sans", sans-serif;
+}
+
+@layer components {
+  .auth-card {
+    @apply lg:w-[40%] md:w-[55%] w-[85%] bg-amber-300 h-[402px] max-h-[402px];
+    @apply bg-cardDark text-white;
+    @apply rounded-card shadow-lg;
+    @apply flex flex-col;
+    @apply text-general;
+  }
+  .formContent {
+    @apply flex flex-col gap-4 py-4 h-full justify-evenly;
+  }
+  .labelText {
+    @apply text-left text-general font-semibold mb-[8px];
+  }
+  .formInput {
+    @apply w-full p-2 rounded-md border border-gray-300 bg-inputDark;
+    @apply focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent;
+    @apply text-general;
+  }
+  .formHeading {
+    @apply text-2xl font-bold relative top-0 bg-indigo-700;
+    @apply text-left;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    @apply py-[16px];
+  }
+  .cardLink {
+    @apply text-emerald-300 hover:text-emerald-500 hover:underline text-tiny font-bold;
+  }
+  .authButton {
+    @apply w-full bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition duration-300 text-general cursor-pointer py-2.5 text-general font-bold;
+  }
+}
