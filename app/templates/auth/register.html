@@ -1,48 +1,165 @@
-
-            <!--  -->
+<!DOCTYPE html>
+<html>
+  <head>
     <link
       rel="stylesheet"
       href="{{url_for('static',filename='dist/main.css')}}"
     />
-    {% extends "base.html" %}
-    {% block title %}Fundwarden : Register{% endblock %}
+    {% extends "base.html" %} {% block title %}Fundwarden : Register{% endblock
+    %}
+  </head>
 
-    {% block content %}
-        <main class="top-[70px] h-[calc(100vh-70px)] relative text-amber-600 text-center text-3xl text-bold w-full bg-bodyDark flex justify-center items-center">
-            <form action="#" method="post" class="auth-card register-card">
-              <h1 class="formHeading px-[40px]">Register</h1>
-              <div class="formContent">
-            <div class="px-[40px] ">
-                <p class="labelText">Username</p>
-                <input type="text" name="username" class="formInput" placeholder="Username" autocomplete="off">
-            </div>
-            <div class="px-[40px] "> 
-                <p class="labelText">Password</p>
-                <input type="password" name="password" class="formInput" placeholder="Password">
-            </div>
-            <div class="px-[40px] "> 
-                <p class="labelText">Confirm Password</p>
-                <input type="password" name="confirm" class="formInput" placeholder="Confirm Password">
-            </div>
-            <div class="px-[40px] ">
-                <button type="submit" class="authButton">Register</button></div>
-            <div class="px-[40px] flex text-sm justify-center items-start gap-2 flex-col justify-evenly gap-[6px] justify-between"> 
-                <span class="text-tiny">Already have an Account ?<a href="{{url_for('auth.login')}}" class="cardLink ml-1">Log In</a></span>
-            </div>
-            </div>
-        </form>
-    </main>
-    {% endblock %}
+  {% block content %}
+  <main
+    class="top-[70px] h-[calc(100vh-70px)] relative text-amber-600 text-center text-3xl text-bold w-full bg-bodyDark flex justify-center items-center"
+  >
+    <form
+      action="#"
+      method="post"
+      class="auth-card register-card"
+      id="register-form"
+    >
+      <h1 class="formHeading px-[40px]">Register</h1>
+      <div class="formContent">
+        <div class="px-[40px]">
+          <p class="labelText">Username</p>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="formInput"
+            placeholder="Username"
+            autocomplete="off"
+          />
+        </div>
+        <div class="px-[40px]">
+          <p class="labelText">Password</p>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="formInput"
+            placeholder="Password"
+          />
+        </div>
+        <div class="px-[40px]">
+          <p class="labelText">Confirm Password</p>
+          <input
+            type="password"
+            id="confirm"
+            name="confirm"
+            class="formInput"
+            placeholder="Confirm Password"
+          />
+        </div>
+        <div class="px-[40px]">
+          <button type="submit" class="authButton disabledBtn">Register</button>
+        </div>
+        <div
+          class="px-[40px] flex text-sm justify-center items-start gap-2 flex-col justify-evenly gap-[6px] justify-between"
+        >
+          <span class="text-tiny"
+            >Already have an Account ?<a
+              href="{{url_for('auth.login')}}"
+              class="cardLink ml-1"
+              >Log In</a
+            ></span
+          >
+        </div>
+      </div>
+    </form>
+    <div
+      id="errorMsgPopup"
+      class="text-[14px] fixed flex bg-red-200 w-[70%] md:w-[35%] text-red p-2.5 rounded-card border-3 box-border text-xl font-bold top-[50px] hidden"
+    >
+      <h3>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Est dolore
+        nostrum saepe repellat.
+      </h3>
+      <p class="relative left-[0%] bottom-[0px]">Close</p>
+    </div>
+  </main>
+
+  <script>
+    // handleMenu() is inherited from base.html
+
+    document.addEventListener("DOMContentLoaded", (event) => {
+      document
+        .getElementById("register-form")
+        .addEventListener("submit", handleSubmit);
+    });
+
+    const errorMsgPopUp = (errorMsg) => {
+      alert(errorMsg);
+    };
+
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+
+      username = document.getElementById("username").value;
+      password = document.getElementById("password").value;
+      confirm = document.getElementById("confirm").value;
+      errorMsg = "";
+      validUsername = true;
+      validPassword = true;
+      validConfirm = true;
+      // The regex for: 6+ chars, 1 Upper, 1 Digit, 1 Special, Password Validation
+      const userRegex = /^[a-zA-Z][^\s]{5,29}$/;
+      const passwordRegex =
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{6,}$/;
+      // Username Validation
+
+      if (!userRegex.test(username)) {
+        validUsername = false;
+        errorMsg =
+          "Username must start with a letter, No Spaces allowed and must have 6-20 characters !";
+      } else if (!passwordRegex.test(password)) {
+        validPassword = false;
+        errorMsg =
+          "Password should have at least 6 characters, 1 digit, 1 Uppercase letter and 1 special character !";
+      }
+      // Confirm Password Validation
+      else if (confirm !== password) {
+        validConfirm = false;
+        errorMsg = "Passwords don't match !";
+      }
+
+      if (validUsername && validPassword && validConfirm) {
+        const regData = {
+          username: username,
+          password: password,
+        };
+        console.log(regData);
+        try {
+          const response = await fetch("/register", {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify(regData),
+          });
+          console.log("Response sent");
+          const result = await response.json();
+          console.log(result);
+
+          if (response.ok) {
+            console.log("Registration Successful !");
+            window.location.href = result.redirect;
+          } else {
+            errorMsgPopUp(result.error);
+          }
+        } catch (error) {
+          console.error("Connection failed", error);
+          errorMsgPopUp("Server unreachable. Try again later.");
+        }
+      } else {
+        errorMsgPopUp(errorMsg);
+      }
+    };
+  </script>
   <script
     src="https://kit.fontawesome.com/a3d72c8bc7.js"
     crossorigin="anonymous"
   ></script>
-  <script>
-    const handleMenu = () => {
-      const navContent = document.getElementById("navContent");
-      navContent.classList.toggle("hidden");
-    };
-  </script>
+  {% endblock %}
+
   <!-- <script src=".../Static/js/script.js"></script> -->
 </html>
-

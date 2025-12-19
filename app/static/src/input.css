@@ -51,4 +51,7 @@
   .authButton {
     @apply w-full bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition duration-300 text-general cursor-pointer py-2.5 text-general font-bold;
   }
+  .disabledBtn {
+    /* @apply bg-emerald-800 text-gray-400 hover:bg-emerald-800 hover:text-gray-400 cursor-default; */
+  }
 }

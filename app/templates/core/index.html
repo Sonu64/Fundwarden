@@ -1,0 +1,22 @@
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='dist/main.css')}}"
+    />
+    {% extends "base.html" %}
+    {% block title %} EXTEND SUCCESS !{% endblock %}
+
+    {% block content %}
+        <h1 class="top-[200px] relative text-amber-600 text-center text-3xl text-bold bg-teal-600">INDEX OF CORE inheriting navbar from base.html boom !</h1>
+    {% endblock %}
+  <script
+    src="https://kit.fontawesome.com/a3d72c8bc7.js"
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    const handleMenu = () => {
+      const navContent = document.getElementById("navContent");
+      navContent.classList.toggle("hidden");
+    };
+  </script>
+  <!-- <script src=".../Static/js/script.js"></script> -->
+</html>

@@ -9,16 +9,16 @@
 
     {% block content %}
         <main class="top-[70px] h-[calc(100vh-70px)] relative text-amber-600 text-center text-3xl text-bold w-full bg-bodyDark flex justify-center items-center">
-            <form action="#" method="post" class="auth-card">
+            <form action="#" method="post" class="auth-card" id="login-form">
               <h1 class="formHeading px-[40px]">Login</h1>
               <div class="formContent">
             <div class="px-[40px] ">
                 <p class="labelText">Username</p>
-                <input type="text" name="username" class="formInput" placeholder="Username" autocomplete="off">
+                <input type="text" name="username" id="username" class="formInput" placeholder="Username" autocomplete="off">
             </div>
             <div class="px-[40px] "> 
                 <p class="labelText">Password</p>
-                <input type="password" name="password" class="formInput" placeholder="Password">
+                <input type="password" name="password" id="password" class="formInput" placeholder="Password">
             </div>
             <div class="px-[40px] ">
                 <button type="submit" class="authButton">Login</button></div>
@@ -29,17 +29,84 @@
             </div>
         </form>
     </main>
-    {% endblock %}
-  <script
+
+    <script
     src="https://kit.fontawesome.com/a3d72c8bc7.js"
     crossorigin="anonymous"
   ></script>
   <script>
-    const handleMenu = () => {
-      const navContent = document.getElementById("navContent");
-      navContent.classList.toggle("hidden");
+
+
+    document.addEventListener("DOMContentLoaded", (event) => {
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", handleSubmit);
+    });
+
+    const errorMsgPopUp = (errorMsg) => {
+      alert(errorMsg);
     };
+
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      form = document.getElementById("register-form");
+      username = document.getElementById("username").value;
+      password = document.getElementById("password").value;
+      errorMsg = "";
+      validUsername = true;
+      validPassword = true;
+      // The regex for: 6+ chars, 1 Upper, 1 Digit, 1 Special, Password Validation
+      const userRegex = /^[a-zA-Z][^\s]{5,29}$/;
+      const passwordRegex =
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{6,}$/;
+      // Username Validation
+
+      if (!userRegex.test(username)) {
+        validUsername = false;
+        errorMsg =
+          "Username must start with a letter, No Spaces allowed and must have 6-20 characters !";
+      } else if (!passwordRegex.test(password)) {
+        validPassword = false;
+        errorMsg =
+          "Password should have at least 6 characters, 1 digit, 1 Uppercase letter and 1 special character !";
+      }
+
+      if (validUsername && validPassword) {
+        const loginData = {
+          username: username,
+          password: password
+        }  
+        try {
+          const response = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(loginData)
+            }
+        );
+
+        result = await response.json()
+
+        if (response.ok) {
+          console.log("Login Successful !")
+          window.location.href = result.redirect;
+        }
+        else {
+          errorMsgPopUp(result.error)
+        }
+      } 
+      catch(err) {
+        console.error("Connection failed", err);
+        errorMsgPopUp("Server unreachable. Try again later.");
+      }
+    }
+    else {
+        errorMsgPopUp(errorMsg);
+      };
+    }
+
   </script>
-  <!-- <script src=".../Static/js/script.js"></script> -->
+    {% endblock %}
+    
+  
 </html>
 
