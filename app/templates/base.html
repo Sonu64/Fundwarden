@@ -54,12 +54,12 @@
 
       <div id="auth" class="flex gap-[10px] mr-[0px] relative">
         <a
-          href="{{url_for('login')}}"
+          href="{{ url_for('auth.login') }}"
           class="py-[4px] w-[105px] text-center rounded-[50px] text-base flex justify-center items-center bg-[#029c75] border-2 border-[#029c75] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
           >Login</a
         >
         <a
-          href="{{url_for('register')}}"
+          href="{{ url_for('auth.register') }}"
           class="py-[4px] w-[105px] text-center rounded-[50px] text-base flex justify-center items-center bg-indigo-700 border-2 border-indigo-700 hover:bg-transparent transition delay-50 duration-300 ease-in-out"
           >Register</a
         >
@@ -157,12 +157,12 @@
             class="flex gap-[15px] justify-center relative items-center relative w-full mt-[42px]"
           >
             <a
-              href="{{url_for('login')}}"
+              href="{{ url_for('auth.login') }}"
               class="py-[4px] w-[105px] text-center rounded-[50px] text-base flex justify-center items-center bg-[#029c75] border-2 border-[#029c75] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
               >Login</a
             >
             <a
-              href="{{url_for('register')}}"
+              href="{{ url_for('auth.register') }}"
               class="py-[4px] w-[105px] text-center rounded-[50px] text-base flex justify-center items-center bg-[#8624ff] border-2 border-[#8624ff] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
               >Register</a
             >

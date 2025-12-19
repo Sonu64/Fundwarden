@@ -1,20 +1,18 @@
-from flask import Flask, render_template
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
-app = Flask(__name__)
+db = SQLAlchemy()
 
-@app.route("/")
-def index():
-    return render_template('auth/register.html')
-
-# Register route
-@app.route("/register")
-def register():
-    return render_template('auth/register.html')
-
-# Login route
-@app.route("/login")
-def login():
-    return render_template('auth/login.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)
+# Factory function
+def create_app():
+    app = Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///./fundwarden.db"
+    db.init_app(app)
+    
+    from app.blueprints.auth.routes import auth # This is the key for Flask to automatically find url_for('core.login') from inside the core folder, and check for @core.route("/login") in routes.py and not in some other file like models.py. Now core. represents the file content of routes.py inside the core folder
+    # !!! Route wale file se Blueprint name ko import karo !!!!
+    
+    app.register_blueprint(auth, url_prefix = "/")
+    
+    return app
