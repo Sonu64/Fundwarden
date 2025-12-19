@@ -3,13 +3,17 @@ from flask import jsonify
 #Import DB and DB Models
 from app.app import db, bcrypt
 from app.blueprints.auth.models import User
+# Import Authentication modules from flask_login
+from flask_login import login_user, logout_user, current_user, login_required
 
 auth  = Blueprint('auth', __name__)
 
 @auth.route("/")
 def index():
-    return render_template('auth/index.html')
-
+    if current_user.is_authenticated:
+        return render_template('auth/index.html', user = current_user)
+    else:
+        return redirect(url_for('auth.login'))
 # url_for('auth.login') ---> Points to the login route handler of the core BP. Because you don't have any @core.route decorators in models.py, Flask never associates anything in models.py with the "core" endpoint.
 
 # When you use Blueprints, Flask "prefixes" every function name with the name of the Blueprint. This is to prevent naming collisions (e.g., if you have an index route in auth and an index route in main). So though login and register handlers of auth are in same file /auth/routes.py, while using url_for() we have to use auth.login, auth.register and auth.index
@@ -36,11 +40,14 @@ def login():
         if not passwordMatched:
             return jsonify({'error': "Wrong Password !"}), 401
         
+        
         else:
+            login_user(userRow)
             return jsonify({
                 'message': "Login Successful !",
                 'redirect': url_for('auth.index')
             }), 200
+            
         
     else:
         return "Invalid Request !"
@@ -74,3 +81,9 @@ def register():
         }), 200
     else:
         return "Invalid Request !"
+    
+
+@auth.route("logout")
+def logout():
+    logout_user()
+    return "Logged Out !"

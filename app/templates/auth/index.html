@@ -6,7 +6,11 @@
     {% block title %} EXTEND SUCCESS !{% endblock %}
 
     {% block content %}
-        <h1 class="top-[200px] relative text-amber-600 text-center text-3xl text-bold bg-teal-600">INDEX OF CORE inheriting navbar from base.html boom !</h1>
+        <h1 class="top-[200px] relative text-amber-600 text-center text-3xl text-bold bg-teal-600">
+          Welcome {{ user.username }} !
+          <a href="{{url_for('auth.logout')}}" class="font-bold text-2xl text-red-500">Logout</a>
+        </h1>
+        
     {% endblock %}
   <script
     src="https://kit.fontawesome.com/a3d72c8bc7.js"

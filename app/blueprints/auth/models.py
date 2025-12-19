@@ -1,6 +1,7 @@
-from app.app import db # No more app.app as Our models folder is in same level as app folder
+from app.app import db
+from flask_login import UserMixin # 1. Import UserMixin
 
-class User(db.Model):
+class User(db.Model, UserMixin):
 
     __tablename__ = "Users"
     
