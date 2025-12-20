@@ -29,3 +29,15 @@ def add():
         return redirect(url_for('core.index'))
     else:
         return "Invalid Request !"
+    
+    
+@core.route('/allocator')
+@login_required
+def allocator():
+    return render_template('core/allocator.html')
+
+
+@core.route('/tracker')
+@login_required
+def tracker():
+    return render_template('core/tracker.html')
