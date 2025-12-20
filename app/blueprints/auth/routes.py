@@ -11,7 +11,7 @@ auth  = Blueprint('auth', __name__)
 @auth.route("/")
 def index():
     if current_user.is_authenticated:
-        return redirect(url_for('core.index')) #Dashboard
+        return redirect(url_for('core.index')) # Dashboard
     else:
         return render_template('/auth/index.html') # Landing page
 # url_for('auth.login') ---> Points to the login route handler of the core BP. Because you don't have any @core.route decorators in models.py, Flask never associates anything in models.py with the "core" endpoint.
