@@ -57,6 +57,6 @@
     @apply w-full bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition duration-300 text-general cursor-pointer py-2.5 text-general font-bold;
   }
   .actionBtn {
-    @apply border-2 w-[200px] p-2.5;
+    @apply border-2 w-[200px] p-2.5 pl-6;
   }
 }
