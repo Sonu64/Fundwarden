@@ -59,4 +59,6 @@
   .actionBtn {
     @apply border-2 w-[200px] p-2.5 pl-6;
   }
+  .addCashSection {
+  }
 }

@@ -12,3 +12,20 @@ core  = Blueprint('core', __name__)
 @login_required
 def index():
     return render_template('/core/index.html', user = current_user)
+
+@core.route('add', methods = ['GET', 'POST'])
+@login_required
+def add():
+    if req.method == 'GET':
+        return render_template('/core/add.html')
+    elif req.method == 'POST':
+        cash = req.form.get('cash')
+        newBalance = int(cash) + int(current_user.balance)
+        # current_user directly Refers to that Row, if we change values for current_user and commit to DB,
+        # the changes take effect in the main Database as well. It represents a "LIVE row in the DB, not just a copy"
+        # Even though current_user "refers to that row," the changes only hit the main database file when you call db.session.commit().
+        current_user.balance = newBalance
+        db.session.commit()
+        return redirect(url_for('core.index'))
+    else:
+        return "Invalid Request !"

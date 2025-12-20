@@ -7,17 +7,18 @@
 
     {% block content %}
     <main class="mainContent">
-            <div class="card w-[85%] bg-indigo-700 flex flex-col h-[400px] max-h-[400px]">
+            <div class="card w-[85%] bg-gray-900 flex flex-col h-[400px] max-h-[400px]">
 
-              <div class="dashboard-heading p-6 text-white text-2xl">
-                <h1>Financial Overview : {{ current_user.username }}</h1>
+              <div class="dashboard-heading p-6 text-white text-2xl bg-indigo-700">
+                {% block appName %}<h1>Financial Overview : {{ current_user.username }}</h1> {%endblock%}
               </div>
 
+              {% block mainContent %}
               <div class="dashboard-sections flex bg-white h-full">
                 <section class="dashboard-section border-r-3 w-[50%] flex flex-col items-start p-5 justify-evenly gap-3 bg-cardDark">
                     <h2 class="bg-gray-900 text-white w-full pl-6 p-5 text-xl">Total Cash Available: <span class="text-yellow-500 font-bold text-2xl"> ₹ {{current_user.balance}}</span></h2>
                     <div class="actions flex flex-col gap-2 w-full">
-                      <a href="#" class="actionBtn bg-emerald-600 text-white font-bold">Add Cash</a>
+                      <a href={{url_for('core.add')}} class="actionBtn bg-emerald-600 text-white font-bold">Add Cash</a>
                       <a href="#" class="actionBtn bg-orange-600 text-white font-bold">Expense Tracker</a>
                       <a href="#" class="actionBtn bg-purple-600 font-bold text-white">Budget Allocator</a>
                     </div>
@@ -30,6 +31,7 @@
                     <h2>A Transaction details</h2>
                 </section>
               </div>
+              {% endblock %}
             </div>
     </main>
 
