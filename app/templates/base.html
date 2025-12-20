@@ -30,11 +30,19 @@
         id="nav-menu"
         class="h-full flex justify-center items-center text-2xl"
       >
+        {% if current_user.is_authenticated %}
+        <a
+          href="#"
+          class="text-base py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out"
+          >Dashboard</a
+        >
+        {% else %}
         <a
           href="#"
           class="text-base py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out"
           >Home</a
         >
+        {% endif %}
         <a
           href="#"
           class="text-base py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out"
@@ -53,6 +61,13 @@
       </div>
 
       <div id="auth" class="flex gap-[10px] mr-[0px] relative">
+        {% if current_user.is_authenticated %}
+        <a
+          href="{{ url_for('auth.logout') }}"
+          class="py-[4px] w-[105px] text-center rounded-[50px] text-base flex justify-center items-center bg-[#de0101] border-2 border-[#de0101] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
+          >Logout</a
+        >
+        {% else %}
         <a
           href="{{ url_for('auth.login') }}"
           class="py-[4px] w-[105px] text-center rounded-[50px] text-base flex justify-center items-center bg-[#029c75] border-2 border-[#029c75] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
@@ -63,6 +78,7 @@
           class="py-[4px] w-[105px] text-center rounded-[50px] text-base flex justify-center items-center bg-indigo-700 border-2 border-indigo-700 hover:bg-transparent transition delay-50 duration-300 ease-in-out"
           >Register</a
         >
+        {% endif %}
       </div>
 
       <button
@@ -130,11 +146,19 @@
 
         <div id="openedNavContent" class="bg-yellow-00 flex flex-col">
           <div id="navMiddle" class="w-full">
+            {% if current_user.is_authenticated %}
+            <a
+              href="#"
+              class="border-t-1 border-[#5d5c5e] text-base py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out w-full flex justify-center mb-[0px]"
+              >Dashboard</a
+            >
+            {% else %}
             <a
               href="#"
               class="border-t-1 border-[#5d5c5e] text-base py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out w-full flex justify-center mb-[0px]"
               >Home</a
             >
+            {% endif %}
             <a
               href="#"
               class="border-t-1 border-[#5d5c5e] text-base py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out w-full flex justify-center mb-[0px]"
@@ -156,6 +180,13 @@
             id="navBottom"
             class="flex gap-[15px] justify-center relative items-center relative w-full mt-[42px]"
           >
+            {% if current_user.is_authenticated == True %}
+            <a
+              href="{{ url_for('auth.logout') }}"
+              class="py-[4px] w-[105px] text-center rounded-[50px] text-base flex justify-center items-center bg-[#de0101] border-2 border-[#de0101] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
+              >Logout</a
+            >
+            {% else %}
             <a
               href="{{ url_for('auth.login') }}"
               class="py-[4px] w-[105px] text-center rounded-[50px] text-base flex justify-center items-center bg-[#029c75] border-2 border-[#029c75] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
@@ -166,6 +197,7 @@
               class="py-[4px] w-[105px] text-center rounded-[50px] text-base flex justify-center items-center bg-[#8624ff] border-2 border-[#8624ff] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
               >Register</a
             >
+            {% endif %}
           </div>
         </div>
       </div>

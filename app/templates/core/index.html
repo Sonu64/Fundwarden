@@ -3,12 +3,15 @@
       href="{{url_for('static',filename='dist/main.css')}}"
     />
     {% extends "base.html" %}
-    {% block title %} EXTEND SUCCESS !{% endblock %}
+    {% block title %} Dashboard {% endblock %}
 
     {% block content %}
-        <h1 class="top-[200px] relative text-amber-600 text-center text-3xl text-bold bg-teal-600">
-            Welcome ! {{user.username}}
+    <main class="flex w-full bg-yellow-600 justify-center items-center top-[250px] relative">
+              <h1 class="text-gray-200 text-center text-3xl text-bold bg-black py-4 w-[80%]">
+            Welcome to your Dashboard {{user.username}} , core.index
         </h1>
+    </main>
+
     {% endblock %}
   <script
     src="https://kit.fontawesome.com/a3d72c8bc7.js"
