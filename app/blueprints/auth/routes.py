@@ -61,25 +61,28 @@ def register():
         return render_template('auth/register.html')
     elif req.method == 'POST':
         data = req.get_json()
-        username = data['username']
+        email = data['email']
         
         #Checking for Uniqueness of the Username
-        existingUser = User.query.filter(User.username == username).first()
+        existingUser = User.query.filter(User.email == email).first()
         
         if existingUser:
-            return jsonify({'error': "Username Already Exists !!"}), 409
+            return jsonify({'error': "An account with that E-Mail Already Exists !!"}), 409
         
+        name = data['name']
         password = data['password']
         # Hashing Password
         hashedPassword = bcrypt.generate_password_hash(password)
         
-        userObject = User(username = username, password = hashedPassword, balance = 1000)
+        userObject = User(email = email, name = name, password = hashedPassword, balance = 1000)
         db.session.add(userObject)
         db.session.commit()
+        
         return jsonify({
             'message': "Registration Successful !",
             'redirect': url_for('auth.login')
         }), 200
+        
     else:
         return "Invalid Request !"
     

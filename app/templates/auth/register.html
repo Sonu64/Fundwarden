@@ -16,49 +16,75 @@
     <form
       action="#"
       method="post"
-      class="auth-card register-card"
+      class="auth-card register-card gap-4 h-[403px]"
       id="register-form"
     >
       <h1 class="formHeading px-[40px]">Register</h1>
-      <div class="formContent">
-        <div class="px-[40px]">
-          <p class="labelText">Username</p>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            class="formInput"
-            placeholder="Username"
-            autocomplete="off"
-          />
+      <div
+        class="formContent flex flex-row w-full px-[0px] justify-center h-auto"
+      >
+        <section class="left flex flex-col justify-start gap-[20px]">
+          <div class="">
+            <p class="labelText mb-[6px]">E-Mail</p>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="formInput w-[210px]"
+              placeholder="E-Mail"
+              autocomplete="off"
+            />
+          </div>
+          <div class="">
+            <p class="labelText mb-[6px]">Full-Name</p>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="formInput"
+              placeholder="Full-Name"
+              autocomplete="off"
+            />
+          </div>
+        </section>
+
+        <section class="right flex flex-col justify-start gap-[20px]">
+          <div class="">
+            <p class="labelText mb-[6px]">Password</p>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="formInput w-[210px]"
+              placeholder="Password"
+            />
+          </div>
+          <div class="">
+            <p class="labelText mb-[6px]">Confirm Password</p>
+            <input
+              type="password"
+              id="confirm"
+              name="confirm"
+              class="formInput"
+              placeholder="Confirm Password"
+            />
+          </div>
+        </section>
+      </div>
+      <div
+        class="px-[40px] flex flex-col items-start w-full h-full justify-evenly"
+      >
+        <div class="flex w-full justify-start gap-4">
+          <button type="submit" class="authButton px-2">
+            <i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;Register
+          </button>
+          <button type="" class="authButton px-2">
+            <i class="fa-brands fa-google"></i>&nbsp;&nbsp;Register using Google
+          </button>
         </div>
-        <div class="px-[40px]">
-          <p class="labelText">Password</p>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            class="formInput"
-            placeholder="Password"
-          />
-        </div>
-        <div class="px-[40px]">
-          <p class="labelText">Confirm Password</p>
-          <input
-            type="password"
-            id="confirm"
-            name="confirm"
-            class="formInput"
-            placeholder="Confirm Password"
-          />
-        </div>
-        <div class="px-[40px]">
-          <button type="submit" class="authButton disabledBtn">Register</button>
-        </div>
-        <div
-          class="px-[40px] flex text-sm justify-center items-start gap-2 flex-col justify-evenly gap-[6px] justify-between"
-        >
-          <span class="text-tiny"
+
+        <div class="py-[16px]">
+          <span class="text-tiny w-full"
             >Already have an Account ?<a
               href="{{url_for('auth.login')}}"
               class="cardLink ml-1"
@@ -68,16 +94,6 @@
         </div>
       </div>
     </form>
-    <div
-      id="errorMsgPopup"
-      class="text-[14px] fixed flex bg-red-200 w-[70%] md:w-[35%] text-red p-2.5 rounded-card border-3 box-border text-xl font-bold top-[50px] hidden"
-    >
-      <h3>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Est dolore
-        nostrum saepe repellat.
-      </h3>
-      <p class="relative left-[0%] bottom-[0px]">Close</p>
-    </div>
   </main>
 
   <script>
@@ -96,23 +112,25 @@
     const handleSubmit = async (event) => {
       event.preventDefault();
 
-      username = document.getElementById("username").value;
+      name = document.getElementById("name").value;
+      email = document.getElementById("email").value;
       password = document.getElementById("password").value;
       confirm = document.getElementById("confirm").value;
+
       errorMsg = "";
-      validUsername = true;
+      validName = true;
       validPassword = true;
       validConfirm = true;
       // The regex for: 6+ chars, 1 Upper, 1 Digit, 1 Special, Password Validation
-      const userRegex = /^[a-zA-Z][^\s]{5,29}$/;
+      const nameRegex = /^[a-zA-Z]+(?:[\s-'][a-zA-Z]+)*$/;
       const passwordRegex =
         /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{6,}$/;
       // Username Validation
 
-      if (!userRegex.test(username)) {
-        validUsername = false;
+      if (!nameRegex.test(name)) {
+        validName = false;
         errorMsg =
-          "Username must start with a letter, No Spaces allowed and must have 6-20 characters !";
+          "Full Name is invalid, It must contain your first-name and last-name starting with Capital Letters.";
       } else if (!passwordRegex.test(password)) {
         validPassword = false;
         errorMsg =
@@ -124,9 +142,10 @@
         errorMsg = "Passwords don't match !";
       }
 
-      if (validUsername && validPassword && validConfirm) {
+      if (validName && validPassword && validConfirm) {
         const regData = {
-          username: username,
+          email: email,
+          name: name,
           password: password,
         };
         console.log(regData);
