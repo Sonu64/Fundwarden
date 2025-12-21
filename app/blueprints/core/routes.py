@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, Flask, request as req, redirect, u
 from flask import jsonify
 #Import DB and DB Models
 from app.app import db, bcrypt
-from app.blueprints.auth.models import User
+from app.blueprints.core.models import Categories
 # Import Authentication modules from flask_login
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -31,13 +31,40 @@ def add():
         return "Invalid Request !"
     
     
-@core.route('/allocator')
+@core.route('allocator')
 @login_required
 def allocator():
-    return render_template('core/allocator.html')
+    categories = Categories.query.filter(Categories.userID == current_user.id)
+    categoriesList = []
+    for c in categories:
+        categoriesList.append({'name':c.name, 'budget':c.budget})
+    return render_template('core/allocator.html', categoriesList = categoriesList)
 
 
-@core.route('/tracker')
+@core.route("createCategory", methods = ['GET', 'POST'])
+@login_required
+def createCategory():
+    if req.method == 'GET':
+        return redirect(url_for('core.allocator'))
+    elif req.method == 'POST':
+        categoryName = req.form.get('category')
+        budget = req.form.get('budget')
+        userID = current_user.id
+        spent = 0
+        remaining = budget
+        
+        categoryObj = Categories(userID = userID, name = categoryName, budget = budget, spent = spent, remaining = remaining)
+        
+        db.session.add(categoryObj)
+        db.session.commit()
+        
+        return redirect(url_for('core.allocator'))
+        
+    else:
+        return "Invalid Request !"
+
+
+@core.route('tracker')
 @login_required
 def tracker():
     return render_template('core/tracker.html')

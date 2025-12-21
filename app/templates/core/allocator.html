@@ -1,2 +1,56 @@
 {% extends 'core/index.html' %} {% block title %} Budget Allocator {% endblock
-%}
+%} {% block appName %} Budget Allocator{% endblock %} {% block mainContent %}
+
+<form action={{url_for('core.createCategory')}} method="POST" class="text-white p-5" id="form">
+  <p class="mb-[20px]">Create a Category and allocate budgets</p>
+  <p class="mb-[8px]">Category Name</p>
+  <input
+    type="text"
+    name="category"
+    id="category"
+    class="formInput w-[30%] mb-3"
+  />
+  <p class="mb-[8px]">Budget for that category</p>
+  <input
+    type="number"
+    name="budget"
+    id="budget"
+    min="0"
+    class="formInput w-[30%]"
+    required
+  />
+  <div>
+    <button type="submit" class="authButton w-[30%] mt-4">
+      Create and Allocate
+    </button>
+  </div>
+</form>
+
+<ul class="bg-white text-black p-8">
+    {% for category in categoriesList %}
+        <li>{{category.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{category.budget}}</li>
+    {% endfor %}
+</ul>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", (event) => {
+    document.getElementById("form").addEventListener("submit", handleSubmit);
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    category = document.getElementById("category").value;
+    budget = document.getElementById("budget").value;
+
+    if (category.trim() === "") {
+      alert("Please Provide a category name !!");
+    } else {
+      alert("Submitted !");
+      form.submit();
+    }
+  };
+</script>
+
+{% endblock %}
