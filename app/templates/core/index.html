@@ -10,7 +10,7 @@
             <div class="card w-[85%] bg-gray-900 flex flex-col h-[400px] max-h-[400px]">
 
               <div class="dashboard-heading p-6 text-white text-2xl bg-indigo-700">
-                {% block appName %}<h1>Financial Overview : {{ current_user.username }}</h1> {%endblock%}
+                {% block appName %}<h1>Financial Overview : {{ current_user.name }}</h1> {%endblock%}
               </div>
 
               {% block mainContent %}

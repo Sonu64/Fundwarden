@@ -13,8 +13,8 @@
               <h1 class="formHeading px-[40px]">Login</h1>
               <div class="formContent">
             <div class="px-[40px] ">
-                <p class="labelText">Username</p>
-                <input type="text" name="username" id="username" class="formInput" placeholder="Username" autocomplete="off">
+                <p class="labelText">E-Mail</p>
+                <input type="email" name="email" id="email" class="formInput" placeholder="E-Mail" autocomplete="off">
             </div>
             <div class="px-[40px] "> 
                 <p class="labelText">Password</p>
@@ -50,30 +50,30 @@
     const handleSubmit = async (event) => {
       event.preventDefault();
       form = document.getElementById("register-form");
-      username = document.getElementById("username").value;
+
+      email = document.getElementById("email").value;
       password = document.getElementById("password").value;
+
       errorMsg = "";
-      validUsername = true;
       validPassword = true;
-      // The regex for: 6+ chars, 1 Upper, 1 Digit, 1 Special, Password Validation
-      const userRegex = /^[a-zA-Z][^\s]{5,29}$/;
+
       const passwordRegex =
         /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{6,}$/;
-      // Username Validation
 
-      if (!userRegex.test(username)) {
-        validUsername = false;
-        errorMsg =
-          "Username must start with a letter, No Spaces allowed and must have 6-20 characters !";
-      } else if (!passwordRegex.test(password)) {
+      if (email.trim() === "" || password.trim()==="") {
         validPassword = false;
-        errorMsg =
-          "Password should have at least 6 characters, 1 digit, 1 Uppercase letter and 1 special character !";
-      }
+        errorMsg = "Please Provide an Email and Password"
+      } 
 
-      if (validUsername && validPassword) {
+      else if (!passwordRegex.test(password)) {
+          validPassword = false;
+          errorMsg =
+            "Wrong Password !";
+        }
+
+      if (validPassword) {
         const loginData = {
-          username: username,
+          email: email,
           password: password
         }  
         try {

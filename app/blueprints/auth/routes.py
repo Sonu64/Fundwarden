@@ -24,16 +24,17 @@ def login():
         return render_template('auth/login.html')
     elif req.method == 'POST':
         data = req.get_json()
-        username = data.get('username')
+        
+        email = data.get('email')
         password = data.get('password')
         
         # Get Row for the Username
-        userRow = User.query.filter(User.username == username).first()
+        userRow = User.query.filter(User.email == email).first()
         # User doesn't exist
         if not userRow:
-            return jsonify({'error': "Username not Found !"}), 401
+            return jsonify({'error': "E-Mail doesn't exist !"}), 401
         
-        hashedPassword = userRow.password;
+        hashedPassword = userRow.password
         # Check hashed password
         passwordMatched = bcrypt.check_password_hash(hashedPassword, password)
         # Password doesn't match
