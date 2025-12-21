@@ -116,13 +116,14 @@
       email = document.getElementById("email").value;
       password = document.getElementById("password").value;
       confirm = document.getElementById("confirm").value;
+      //alert(name, email, password, confirm);
 
       errorMsg = "";
       validName = true;
       validPassword = true;
       validConfirm = true;
       // The regex for: 6+ chars, 1 Upper, 1 Digit, 1 Special, Password Validation
-      const nameRegex = /^[a-zA-Z]+(?:[\s-'][a-zA-Z]+)*$/;
+      const nameRegex = /^[A-Z][a-z]*(?:[\s-'][A-Z][a-z]*)*$/;
       const passwordRegex =
         /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{6,}$/;
       // Username Validation
