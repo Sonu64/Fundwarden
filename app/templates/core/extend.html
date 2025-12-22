@@ -1,0 +1,41 @@
+{% extends "core/index.html" %} {% block title %} Add Cash {% endblock %} {%
+block appName %} Extend Budgets {% endblock %} {% block mainContent %}
+<form action={{url_for('core.extend')}} method="POST" class="addCashSection pl-6 pt-6 h-full" id="form">
+  <div class="w-[40%] flex flex-col h-full gap-3">
+  <p class="text-gray-200 text-[19px]">Choose Category to Extend Budget</p>
+  <div>  
+    <select name="category" id="category" class="text-white border-2 border-white w-full p-2.5">
+                <option value="" selected disabled hidden>Choose a Category</option>
+        {% for c in categories %}
+            <option value={{c.name}} class="bg-[#101828]">{{c.name}}</option>
+        {% endfor %}
+    </select>
+    <p class="text-white mt-4">Extension Amount</p>
+    <input type="number" name="extension" id="extension" min = "0" class="formInput mt-2">
+</div>
+
+  <div>
+    <button type="submit" class=" bg-emerald-600 px-[30px] text-white py-[10px] mt-[10px] border-2 border-white box-border hover:bg-emerald-800 cursor-pointer font-bold text-[17px]">Extend Budget</button>
+</div>
+  
+</form>
+
+<script>
+  document.addEventListener("DOMContentLoaded", (event) => {
+    document.getElementById("form").addEventListener("submit", handleSubmit);
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    category = document.getElementById("category").value;
+    extension = document.getElementById("extension").value;
+
+    if (category.trim() === "") {
+      alert("Please Provide a category name !!");
+    } else {
+      //alert("Submitted !");
+      form.submit();
+    }
+  };
+</script>
+{% endblock %}

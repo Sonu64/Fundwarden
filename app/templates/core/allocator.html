@@ -1,14 +1,15 @@
 {% extends 'core/index.html' %} {% block title %} Budget Allocator {% endblock
 %} {% block appName %} Budget Allocator{% endblock %} {% block mainContent %}
 
-<form action={{url_for('core.createCategory')}} method="POST" class="text-white p-5" id="form">
+<div class="container flex">
+<form action={{url_for('core.createCategory')}} method="POST" class="text-white p-5 w-[60%] bg-gray-800" id="form">
   <p class="mb-[20px]">Create a Category and allocate budgets</p>
   <p class="mb-[8px]">Category Name</p>
   <input
     type="text"
     name="category"
     id="category"
-    class="formInput w-[30%] mb-3"
+    class="formInput w-[80%] mb-3"
   />
   <p class="mb-[8px]">Budget for that category</p>
   <input
@@ -16,21 +17,23 @@
     name="budget"
     id="budget"
     min="0"
-    class="formInput w-[30%]"
+    class="formInput w-[80%]"
     required
   />
   <div>
-    <button type="submit" class="authButton w-[30%] mt-4">
+    <button type="submit" class="authButton w-[80%] mt-4">
       Create and Allocate
     </button>
   </div>
 </form>
-
-<ul class="bg-white text-black p-8">
+<section class="right flex flex-col w-full"><ul class="bg-white text-black p-8">
     {% for category in categoriesList %}
         <li>{{category.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{category.budget}}</li>
     {% endfor %}
 </ul>
+<a href={{url_for('core.extend')}} class="text-cyan-300 font-bold border-2 p-3">Extend Budgets</a></section>
+
+</div>
 
 
 <script>
@@ -45,9 +48,9 @@
     budget = document.getElementById("budget").value;
 
     if (category.trim() === "") {
-      alert("Please Provide a category name !!");
+      //alert("Please Provide a category name !!");
     } else {
-      alert("Submitted !");
+      //alert("Submitted !");
       form.submit();
     }
   };

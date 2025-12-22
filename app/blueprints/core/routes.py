@@ -64,6 +64,46 @@ def createCategory():
         return "Invalid Request !"
 
 
+
+
+@core.route('extend', methods = ['GET', 'POST'])
+@login_required
+def extend():
+    if req.method == 'GET':
+        categories = Categories.query.filter(Categories.userID == current_user.id)
+        categoriesList = []
+        for c in categories:
+            categoriesList.append({'name':c.name, 'budget':c.budget})
+        return render_template('core/extend.html', categories = categoriesList)
+    elif req.method == 'POST':
+        category = req.form.get('category')
+        extension = req.form.get('extension')
+        
+        filteredCategory = Categories.query.filter(Categories.name==category, Categories.userID==current_user.id).first() 
+        # .first() or .all() is ALWAYS needed !!!!!!
+        # .all() gives a List of Category Objects ---> all objects are Live Copies from the DB
+        # .first() gives a Single Category Object ---> all objects are Live Copies from the DB
+        
+        if not filteredCategory:
+            return "Category Not found !"
+        
+        filteredCategory.budget += int(extension)
+        
+        # db.session.add(filteredCategory) # No need as filteredCategory is a Live Copy of the Row, though
+        # db.session.commit() is needed as below
+        db.session.commit()
+        
+        return redirect(url_for('core.allocator'))
+    else:
+        return "Invalid Request"
+    
+
+
+
+
+
+
+
 @core.route('tracker')
 @login_required
 def tracker():
