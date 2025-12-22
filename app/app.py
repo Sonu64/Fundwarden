@@ -3,19 +3,32 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt  # Import Bcrypt
 from flask_login import LoginManager
+from flask_mail import Mail
 
 
 db = SQLAlchemy() # DB Instance globally
 bcrypt = Bcrypt() # Bcrypt Instance globally
+mail = Mail()
 
 # Factory function
 def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///./fundwarden.db"
     app.secret_key = "ds#*&@^80f90$%^@09_8@89xn83928_8(*2*^73)"
+
+    
+    # Mail Object Setup
+    # 1. Setup Config ONCE at the start
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+    app.config['MAIL_PORT'] = 587
+    app.config['MAIL_USE_TLS'] = True
+    app.config['MAIL_USERNAME'] = 'sonusantu64@gmail.com'
+    app.config['MAIL_PASSWORD'] = '16 digit app password' # No brackets <>
+
     
     db.init_app(app)
     bcrypt.init_app(app)
+    mail.init_app(app)
     
     loginManager = LoginManager()
     loginManager.init_app(app)

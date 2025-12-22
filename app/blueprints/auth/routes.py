@@ -1,10 +1,11 @@
-from flask import Blueprint, render_template, Flask, request as req, redirect, url_for
+from flask import Blueprint, render_template, Flask, request as req, redirect, url_for, flash
 from flask import jsonify
 #Import DB and DB Models
-from app.app import db, bcrypt
+from app.app import db, bcrypt, mail
 from app.blueprints.auth.models import User
 # Import Authentication modules from flask_login
 from flask_login import login_user, logout_user, current_user, login_required
+from flask_mail import Message
 
 auth  = Blueprint('auth', __name__)
 
@@ -73,7 +74,7 @@ def register():
         name = data['name']
         password = data['password']
         # Hashing Password
-        hashedPassword = bcrypt.generate_password_hash(password)
+        hashedPassword = bcrypt.generate_password_hash(password).decode('utf-8')
         
         userObject = User(email = email, name = name, password = hashedPassword, balance = 1000)
         db.session.add(userObject)
@@ -92,3 +93,66 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('auth.index')) # Landing Page
+
+
+@auth.route("forgotPassword", methods = ['GET', 'POST'])
+def forgotPassword():
+    if req.method == 'GET':
+        return render_template('auth/forgot.html')
+    elif req.method == 'POST':
+        email = req.form.get("email")
+        user = User.query.filter(User.email == email).first()
+        if not user:
+            return "User Not Found !", 409
+        try:
+            # Generate Reset Token, from user specific generateResetToken() function, which gets access to current user's email via self.email. But if we had made it a static method, we had to pass queried user from here. But being a normal method, it gets to user via self.
+            token = user.generateResetToken() 
+            resetLink = url_for('auth.resetPassword', token = token, _external = True)
+            # Send Reset Link via E-Mail
+            msg = Message("Password Reset Request", sender = "sonusantu64@gmail.com", recipients = [email])
+            msg.body = f"Fundwarden Password Reset Link: {resetLink}"
+            mail.send(msg)
+            flash("Password Reset Link sent in E-Mail, please check your Inbox.")
+            print("Mail Sent !")
+            return redirect(url_for('auth.login'))
+        except Exception as e:
+            print(e)
+            flash("Error Occured while Sending E-Mail !")
+            return "An Error occured while sending Password reset E-Mail !"
+    else:
+        return "Invalid Request !"
+    
+
+# Use the Token as an URL Parameter to generate different reset links for different users
+@auth.route("resetPassword/<token>", methods = ['GET', 'POST'])
+def resetPassword(token):
+    email = User.verifyResetToken(token) # Decode the E-Mail part from the token
+    if not email:
+        return "Invalid E-Mail Address or Token Expired !"
+    
+    if req.method == 'GET':
+        # A Valid GET request, matching the URL syntax can only be sent by clicking on the Link sent via e-mail
+        return render_template('auth/reset.html', token = token)
+    
+    elif req.method == 'POST':
+        password = req.form.get('password')
+        hashedPassword = bcrypt.generate_password_hash(password).decode('utf-8')
+        
+        user = User.query.filter(User.email == email).first()
+        if not user:
+            print("User not found !!!!!!!!!!!!!!!!!")
+        else:
+            print("User Found !")
+            
+        user.password = hashedPassword
+        
+
+        
+        db.session.commit()
+        
+        print("Password updated !")
+        flash("Your Password has been updated !")
+        return redirect(url_for('auth.login'))
+    else:
+        return "Invalid Request !"
+    

@@ -8,6 +8,18 @@
     {% block title %}Fundwarden : Login{% endblock %}
 
     {% block content %}
+
+    {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div>
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+
         <main class="top-[70px] h-[calc(100vh-70px)] relative text-amber-600 text-center text-3xl text-bold w-full bg-bodyDark flex justify-center items-center">
             <form action="#" method="post" class="auth-card" id="login-form">
               <h1 class="formHeading px-[40px]">Login</h1>
