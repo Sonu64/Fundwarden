@@ -166,7 +166,7 @@ def resetPassword(token):
             return render_template('auth/reset.html', token = token, password = password, confirm = confirm)
         
         if password != confirm:
-            flash("Passwords Don't match !")
+            flash("Passwords Don't match !", "danger")
             return render_template('auth/reset.html', token = token, password = password, confirm = confirm)
             
         hashedPassword = bcrypt.generate_password_hash(password).decode('utf-8')
