@@ -154,7 +154,7 @@ def resetPassword(token):
     
     if req.method == 'GET':
         # A Valid GET request, matching the URL syntax can only be sent by clicking on the Link sent via e-mail
-        return render_template('auth/reset.html', password = "", confirm = "")
+        return render_template('auth/reset.html', token = token, password = "", confirm = "")
     
     elif req.method == 'POST':
         password = req.form.get('password')
@@ -163,11 +163,11 @@ def resetPassword(token):
         
         if not re.match(passwordRegex, password):
             flash("Password must contain more than 6 characters, at least One uppercase letter, a number and a special character !", 'danger')
-            return redirect(url_for('auth.resetPassword', token = token))
+            return render_template('auth/reset.html', token = token, password = password, confirm = confirm)
         
         if password != confirm:
             flash("Passwords Don't match !")
-            return redirect(url_for('auth.resetPassword', token = token))
+            return render_template('auth/reset.html', token = token, password = password, confirm = confirm)
             
         hashedPassword = bcrypt.generate_password_hash(password).decode('utf-8')
         user.password = hashedPassword
