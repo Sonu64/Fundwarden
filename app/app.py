@@ -4,6 +4,16 @@ from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt  # Import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
+from dotenv import load_dotenv
+import os
+
+# This loads the variables from .env into the system environment
+load_dotenv()
+
+# Now you can read them
+
+secret_key = os.environ.get('SECRET_KEY')
+database_address = os.environ.get('SQLALCHEMY_DATABASE_URI')
 
 
 db = SQLAlchemy() # DB Instance globally
@@ -13,18 +23,17 @@ mail = Mail()
 # Factory function
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///./fundwarden.db"
-    app.secret_key = "ds#*&@^80f90$%^@09_8@89xn83928_8(*2*^73)"
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_address
+    app.secret_key = secret_key
 
     
     # Mail Object Setup
     # 1. Setup Config ONCE at the start
-    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-    app.config['MAIL_PORT'] = 587
-    app.config['MAIL_USE_TLS'] = True
-    app.config['MAIL_USERNAME'] = 'sonusantu64@gmail.com'
-    app.config['MAIL_PASSWORD'] = '16 digit app password' # No brackets <>
-
+    app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER')
+    app.config['MAIL_PORT'] = os.environ.get('MAIL_PORT')
+    app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS')
+    app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+    app.config['MAIL_PASSWORD'] = os.environ.get('APP_EMAIL_PASSWORD')
     
     db.init_app(app)
     bcrypt.init_app(app)

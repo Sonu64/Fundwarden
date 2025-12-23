@@ -102,7 +102,7 @@ def forgotPassword():
     elif req.method == 'POST':
         email = req.form.get("email")
         foundUser = User.query.filter(User.email == email).first() # self in non-static methods represents this Live Row from the Users Table
-        if not foundUsers:
+        if not foundUser:
             return "User Not Found !", 409
         try:
             # Generate Reset Token, from user specific generateResetToken() function, which gets access to current user's email via self.email. But if we had made it a static method, we had to pass queried user from here. But being a normal method, it gets to user via self.
