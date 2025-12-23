@@ -101,12 +101,12 @@ def forgotPassword():
         return render_template('auth/forgot.html')
     elif req.method == 'POST':
         email = req.form.get("email")
-        user = User.query.filter(User.email == email).first()
-        if not user:
+        foundUser = User.query.filter(User.email == email).first() # self in non-static methods represents this Live Row from the Users Table
+        if not foundUsers:
             return "User Not Found !", 409
         try:
             # Generate Reset Token, from user specific generateResetToken() function, which gets access to current user's email via self.email. But if we had made it a static method, we had to pass queried user from here. But being a normal method, it gets to user via self.
-            token = user.generateResetToken() 
+            token = foundUser.generateResetToken() 
             resetLink = url_for('auth.resetPassword', token = token, _external = True)
             # Send Reset Link via E-Mail
             msg = Message("Password Reset Request", sender = "sonusantu64@gmail.com", recipients = [email])
