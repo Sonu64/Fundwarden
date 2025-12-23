@@ -1,6 +1,5 @@
 from flask import current_app # To Successfully import the current app instance before it has been created in the factory function create_app(). It will cause error for [from app.app import app], because app is initialized only inside the facotry function and the import triggers at the very beginning, when app instance is not yet created in app.app
 from flask_login import UserMixin # 1. Import UserMixin
-from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer
 from app.app import db
 

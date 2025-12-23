@@ -15,11 +15,12 @@
               <div class="formContent">
             <div class="px-[40px] ">
                 <p class="labelText">Enter new Password</p>
-                <input type="password" name="password" id="email" class="formInput" placeholder="New Password" autocomplete="off">
+                <input type="password" name="password" id="email" class="formInput" placeholder="New Password" autocomplete="off"
+                value="{{ password if password else ''}}">
             </div>
             <div class="px-[40px] ">
                 <p class="labelText">Confirm Password</p>
-                <input type="password" name="confirm" id="email" class="formInput" placeholder="Confirm New Password" autocomplete="off">
+                <input type="password" name="confirm" id="email" class="formInput" placeholder="Confirm New Password" autocomplete="off" value="{{ confirm if confirm else ''}}">
             </div>
 
             <div class="px-[40px] ">

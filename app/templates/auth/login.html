@@ -9,15 +9,7 @@
 
     {% block content %}
 
-    {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                <div>
-                    {{ message }}
-                </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+
 
 
         <main class="top-[70px] h-[calc(100vh-70px)] relative text-amber-600 text-center text-3xl text-bold w-full bg-bodyDark flex justify-center items-center">
@@ -26,11 +18,11 @@
               <div class="formContent">
             <div class="px-[40px] ">
                 <p class="labelText">E-Mail</p>
-                <input type="email" name="email" id="email" class="formInput" placeholder="E-Mail" autocomplete="off">
+                <input type="email" name="email" id="email" class="formInput" placeholder="E-Mail" autocomplete="off" value = {{ email if email else ""}}>
             </div>
             <div class="px-[40px] "> 
                 <p class="labelText">Password</p>
-                <input type="password" name="password" id="password" class="formInput" placeholder="Password">
+                <input type="password" name="password" id="password" class="formInput" placeholder="Password" value = {{password if password else ""}}>
             </div>
             <div class="px-[40px] ">
                 <button type="submit" class="authButton">Login</button></div>
@@ -55,65 +47,15 @@
         .addEventListener("submit", handleSubmit);
     });
 
-    const errorMsgPopUp = (errorMsg) => {
-      alert(errorMsg);
-    };
-
     const handleSubmit = async (event) => {
       event.preventDefault();
-      form = document.getElementById("register-form");
+
+      form = document.getElementById("login-form");
 
       email = document.getElementById("email").value;
       password = document.getElementById("password").value;
 
-      errorMsg = "";
-      validPassword = true;
-
-      const passwordRegex =
-        /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{6,}$/;
-
-      if (email.trim() === "" || password.trim()==="") {
-        validPassword = false;
-        errorMsg = "Please Provide an Email and Password"
-      } 
-
-      else if (!passwordRegex.test(password)) {
-          validPassword = false;
-          errorMsg =
-            "Wrong Password !";
-        }
-
-      if (validPassword) {
-        const loginData = {
-          email: email,
-          password: password
-        }  
-        try {
-          const response = await fetch('/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(loginData)
-            }
-        );
-
-        result = await response.json()
-
-        if (response.ok) {
-          console.log("Login Successful !")
-          window.location.href = result.redirect;
-        }
-        else {
-          errorMsgPopUp(result.error)
-        }
-      } 
-      catch(err) {
-        console.error("Connection failed", err);
-        errorMsgPopUp("Server unreachable. Try again later.");
-      }
-    }
-    else {
-        errorMsgPopUp(errorMsg);
-      };
+      form.submit()
     }
 
   </script>

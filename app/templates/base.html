@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %} Default Title {% endblock %}</title>
+
     <link
       rel="stylesheet"
       href="{{url_for('static',filename='dist/main.css')}}"
@@ -17,6 +18,35 @@
   </head>
 
   <body class="font-DMSans bg-bodyDark">
+    <div
+      class="fixed top-18 w-full z-50 flex flex-col items-center gap-2"
+      id="msgDiv"
+    >
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %} {% if category ==
+      "danger" %}
+      <div
+        class="alert alert-{{ category }} alert-dismissible text-black font-bold bg-red-200 border-2 border-red-500 px-11 py-3"
+        role="alert"
+      >
+        {{ message }}
+      </div>
+      {% elif category == "success" %}
+      <div
+        class="px-11 py-3 alert alert-{{ category }} alert-dismissible text-black font-bold bg-green-300 border-2 border-green-700"
+        role="alert"
+      >
+        {{ message }}
+      </div>
+      {% else %}
+      <div
+        class="px-11 py-3 alert alert-{{ category }} alert-dismissible text-black font-bold bg-yellow-200 border-2 border-yellow-500"
+        role="alert"
+      >
+        {{ message }}
+      </div>
+      {% endif %} {% endfor %} {% endif %} {% endwith %}
+    </div>
     <nav
       class="bg-primaryDark text-white flex items-center fixed w-full md:h-[70px] md:justify-evenly md:flex hidden md:text-2xl top-0"
     >
@@ -215,5 +245,13 @@
       const navContent = document.getElementById("navContent");
       navContent.classList.toggle("hidden");
     };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => {
+        const msgDiv = document.getElementById("msgDiv");
+        msgDiv.style.transition = "0.7s ease";
+        msgDiv.style.top = "-600px";
+      }, 3500);
+    });
   </script>
 </html>

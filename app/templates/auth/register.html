@@ -33,6 +33,8 @@
               class="formInput w-[210px]"
               placeholder="E-Mail"
               autocomplete="off"
+              value="{{ email if email else
+            ''}}"
             />
           </div>
           <div class="">
@@ -44,6 +46,8 @@
               class="formInput"
               placeholder="Full-Name"
               autocomplete="off"
+              value="{{ name if name else
+            ''}}"
             />
           </div>
         </section>
@@ -57,6 +61,7 @@
               name="password"
               class="formInput w-[210px]"
               placeholder="Password"
+              value="{{password if password else ''}}"
             />
           </div>
           <div class="">
@@ -67,6 +72,8 @@
               name="confirm"
               class="formInput"
               placeholder="Confirm Password"
+              value="{{ confirm if confirm else
+            ''}}"
             />
           </div>
         </section>
@@ -105,74 +112,10 @@
         .addEventListener("submit", handleSubmit);
     });
 
-    const errorMsgPopUp = (errorMsg) => {
-      alert(errorMsg);
-    };
-
     const handleSubmit = async (event) => {
       event.preventDefault();
-
-      name = document.getElementById("name").value;
-      email = document.getElementById("email").value;
-      password = document.getElementById("password").value;
-      confirm = document.getElementById("confirm").value;
-      //alert(name, email, password, confirm);
-
-      errorMsg = "";
-      validName = true;
-      validPassword = true;
-      validConfirm = true;
-      // The regex for: 6+ chars, 1 Upper, 1 Digit, 1 Special, Password Validation
-      const nameRegex = /^[A-Z][a-z]*(?:[\s-'][A-Z][a-z]*)*$/;
-      const passwordRegex =
-        /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{6,}$/;
-      // Username Validation
-
-      if (!nameRegex.test(name)) {
-        validName = false;
-        errorMsg =
-          "Full Name is invalid, It must contain your first-name and last-name starting with Capital Letters.";
-      } else if (!passwordRegex.test(password)) {
-        validPassword = false;
-        errorMsg =
-          "Password should have at least 6 characters, 1 digit, 1 Uppercase letter and 1 special character !";
-      }
-      // Confirm Password Validation
-      else if (confirm !== password) {
-        validConfirm = false;
-        errorMsg = "Passwords don't match !";
-      }
-
-      if (validName && validPassword && validConfirm) {
-        const regData = {
-          email: email,
-          name: name,
-          password: password,
-        };
-        console.log(regData);
-        try {
-          const response = await fetch("/register", {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify(regData),
-          });
-          console.log("Response sent");
-          const result = await response.json();
-          console.log(result);
-
-          if (response.ok) {
-            console.log("Registration Successful !");
-            window.location.href = result.redirect;
-          } else {
-            errorMsgPopUp(result.error);
-          }
-        } catch (error) {
-          console.error("Connection failed", error);
-          errorMsgPopUp("Server unreachable. Try again later.");
-        }
-      } else {
-        errorMsgPopUp(errorMsg);
-      }
+      form = document.getElementById("register-form");
+      form.submit();
     };
   </script>
   <script
