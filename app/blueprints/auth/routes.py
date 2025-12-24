@@ -30,21 +30,21 @@ def login():
         
         if email.strip() == "" or len(password) == 0:
             flash("Please Provide an E-Mail Address and Password", "danger")
-            return render_template('auth/login.html', email = email, password = password)
+            return render_template('auth/login.html', email = email, password = "")
         
         # Get Row for the Username
         userRow = User.query.filter(User.email == email).first()
         # User doesn't exist
         if not userRow:
             flash("E-Mail does not exist !", "danger")
-            return render_template('auth/login.html', email = email, password = password)
+            return render_template('auth/login.html', email = email, password = "")
         hashedPassword = userRow.password
         # Check hashed password
         passwordMatched = bcrypt.check_password_hash(hashedPassword, password)
         # Password doesn't match
         if not passwordMatched:
             flash("Wrong Password !", "danger")
-            return render_template('auth/login.html', email = email, password = password)
+            return render_template('auth/login.html', email = email, password = "")
         else:
             login_user(userRow) # Cookie with userID: <userID> saved but will not persist to subsequent requests if LoginManager.user_loader is not properly configured.
             # login_user() finds the ID with the .get_id attribute provided by UserMixin
@@ -78,19 +78,19 @@ def register():
         existingUser = User.query.filter(User.email == email).first()
         if existingUser:
             flash("E-Mail already exists !", "danger")
-            return render_template("auth/register.html", email = email, name = name, password = password, confirm = confirm)
+            return render_template("auth/register.html", email = email, name = name, password = "", confirm = "")
         
         if not re.match(nameRegex, name):
             flash("Full Name must contain your First and Last names starting with capital letters, seperated by Space, no numbers allowed !", 'danger')
-            return render_template('auth/register.html', email = email, name = name, password = password, confirm = confirm)
+            return render_template('auth/register.html', email = email, name = name, password = "", confirm = "")
                    
         if not re.match(passwordRegex, password):
             flash("Password must contain more than 6 characters, at least One uppercase letter, a number and a special character !", 'danger')
-            return render_template('auth/register.html', email = email, name = name, password = password, confirm = confirm)     
+            return render_template('auth/register.html', email = email, name = name, password = "", confirm = "")     
         
         if password != confirm:
             flash("Passwords don't match !", 'danger')
-            return render_template('auth/register.html', email = email, name = name, password = password, confirm = confirm) 
+            return render_template('auth/register.html', email = email, name = name, password = "", confirm = "") 
                                                            
 
         ## When every condiition above doesn't hold true ##
@@ -122,7 +122,7 @@ def forgotPassword():
         email = req.form.get("email")
         if email.strip() == "":
             flash("Please provide an E-Mail Address !", "danger")
-            return render_template('auth/forgot.html', email = "")
+            return render_template('auth/forgot.html', email = email)
         foundUser = User.query.filter(User.email == email).first() # self in non-static methods represents this Live Row from the Users Table
         try:
             # Generate Reset Token, from user specific generateResetToken() function, which gets access to current user's email via self.email. But if we had made it a static method, we had to pass queried user from here. But being a normal method, it gets to user via self.
@@ -163,11 +163,11 @@ def resetPassword(token):
         
         if not re.match(passwordRegex, password):
             flash("Password must contain more than 6 characters, at least One uppercase letter, a number and a special character !", 'danger')
-            return render_template('auth/reset.html', token = token, password = password, confirm = confirm)
+            return render_template('auth/reset.html', token = token, password = "", confirm = confirm)
         
         if password != confirm:
             flash("Passwords Don't match !", "danger")
-            return render_template('auth/reset.html', token = token, password = password, confirm = confirm)
+            return render_template('auth/reset.html', token = token, password = "", confirm = confirm)
             
         hashedPassword = bcrypt.generate_password_hash(password).decode('utf-8')
         user.password = hashedPassword
