@@ -132,7 +132,7 @@ def forgotPassword():
             msg = Message("Password Reset Request", sender = "sonusantu64@gmail.com", recipients = [email])
             msg.body = f"Fundwarden Password Reset Link: {resetLink}"
             mail.send(msg)
-            flash("If any account with that E-Mail exists, Password Reset Link was sent to that E-Mail, please check your Inbox.", "info")
+            flash("Password Reset Link Sent to your E-Mail, please check your Inbox.", "info")
             print("Mail Sent !")
             return redirect(url_for('auth.login'))
         except Exception as e:
