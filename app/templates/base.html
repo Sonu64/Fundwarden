@@ -26,21 +26,21 @@
       messages %} {% for category, message in messages %} {% if category ==
       "danger" %}
       <div
-        class="alert alert-{{ category }} alert-dismissible text-black font-bold bg-red-200 border-2 border-red-500 px-11 py-3"
+        class="alert alert-{{ category }} alert-dismissible text-black font-bold bg-red-200 border-2 border-red-500 px-12 py-3"
         role="alert"
       >
         {{ message }}
       </div>
       {% elif category == "success" %}
       <div
-        class="px-11 py-3 alert alert-{{ category }} alert-dismissible text-black font-bold bg-green-300 border-2 border-green-700"
+        class="px-12 py-3 alert alert-{{ category }} alert-dismissible text-black font-bold bg-green-300 border-2 border-green-700"
         role="alert"
       >
         {{ message }}
       </div>
       {% else %}
       <div
-        class="px-11 py-3 alert alert-{{ category }} alert-dismissible text-black font-bold bg-yellow-200 border-2 border-yellow-500"
+        class="px-12 py-3 alert alert-{{ category }} alert-dismissible text-black font-bold bg-yellow-200 border-2 border-yellow-500"
         role="alert"
       >
         {{ message }}

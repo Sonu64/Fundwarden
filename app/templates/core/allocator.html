@@ -2,7 +2,7 @@
 %} {% block appName %} Budget Allocator{% endblock %} {% block mainContent %}
 
 <div class="container flex">
-<form action={{url_for('core.createCategory')}} method="POST" class="text-white p-5 w-[60%] bg-gray-800" id="form">
+<form action="{{url_for('core.createCategory')}}" method="POST" class="text-white p-5 w-[60%] bg-gray-800" id="form">
   <p class="mb-[20px]">Create a Category and allocate budgets</p>
   <p class="mb-[8px]">Category Name</p>
   <input
@@ -10,6 +10,7 @@
     name="category"
     id="category"
     class="formInput w-[80%] mb-3"
+    value = '{{ category if category else "" }}'
   />
   <p class="mb-[8px]">Budget for that category</p>
   <input
@@ -18,6 +19,7 @@
     id="budget"
     min="0"
     class="formInput w-[80%]"
+    value = '{{ budget if budget else "" }}'
     required
   />
   <div>
@@ -37,23 +39,7 @@
 
 
 <script>
-  document.addEventListener("DOMContentLoaded", (event) => {
-    document.getElementById("form").addEventListener("submit", handleSubmit);
-  });
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    category = document.getElementById("category").value;
-    budget = document.getElementById("budget").value;
-
-    if (category.trim() === "") {
-      //alert("Please Provide a category name !!");
-    } else {
-      //alert("Submitted !");
-      form.submit();
-    }
-  };
+  
 </script>
 
 {% endblock %}

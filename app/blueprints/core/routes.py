@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, Flask, request as req, redirect, url_for
-from flask import jsonify
+from flask import jsonify, flash
 #Import DB and DB Models
 from app.app import db, bcrypt
 from app.blueprints.core.models import Categories
@@ -38,17 +38,37 @@ def allocator():
     categoriesList = []
     for c in categories:
         categoriesList.append({'name':c.name, 'budget':c.budget})
-    return render_template('core/allocator.html', categoriesList = categoriesList)
+    return render_template('core/allocator.html', categoriesList = categoriesList, category = "", budget = "")
 
 
 @core.route("createCategory", methods = ['GET', 'POST'])
 @login_required
 def createCategory():
     if req.method == 'GET':
-        return redirect(url_for('core.allocator'))
+        # Possible only through Redirects to url_for('core.createCategory')
+        return redirect(url_for('core.allocator')) # category and budget handled by IF jinja syntax in core/allocator.html, same for categoriesList, these values can only be added by render_template, not redirect()
     elif req.method == 'POST':
         categoryName = req.form.get('category')
         budget = req.form.get('budget')
+        print(categoryName, budget)
+        if (categoryName.strip() == ""):
+            flash("Please Provide a Category name !", "danger")
+            categories = Categories.query.filter(Categories.userID == current_user.id)
+            categoriesList = []
+            for c in categories:
+                categoriesList.append({'name':c.name, 'budget':c.budget})
+            return render_template('core/allocator.html', categoriesList = categoriesList, category = "", budget = budget)
+        
+        if (int(budget) == 0):
+            flash("Please Provide a Budget amount !", "danger")
+            categories = Categories.query.filter(Categories.userID == current_user.id)
+            categoriesList = []
+            for c in categories:
+                categoriesList.append({'name':c.name, 'budget':c.budget})
+            return render_template('core/allocator.html', categoriesList = categoriesList, category = categoryName, budget = "")
+        
+        categoryName = categoryName.strip()
+        
         userID = current_user.id
         spent = 0
         remaining = budget
@@ -58,6 +78,7 @@ def createCategory():
         db.session.add(categoryObj)
         db.session.commit()
         
+        flash(f"Successfuly created Category {categoryName} !", "success")
         return redirect(url_for('core.allocator'))
         
     else:
