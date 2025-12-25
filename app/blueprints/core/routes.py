@@ -102,16 +102,24 @@ def extend():
                                category="",
                                extension="")
     elif req.method == 'POST':
-        category = req.form.get('category')
-        extension = req.form.get('extension')
+        
+        try:
+            category = req.form.get('category')
+            extension = int(req.form.get('extension'))
+        except (ValueError, TypeError):
+            flash("Numeric Value needed !", "danger")
+            return render_template('core/extend.html',
+                                   categories=categoriesList,
+                                   category="",
+                                   extension="")
 
-        if (not category):
+        if (not category or category.strip()==""):
             flash("Please Choose a Category !", "danger")
             return render_template('core/extend.html',
                                    categories=categoriesList,
                                    category="",
                                    extension=extension)
-        if (extension == "0" or not extension):
+        if (extension == 0):
             flash("Please Give a Valid Extension amount !", "danger")
             return render_template('core/extend.html',
                                    categories=categoriesList,
