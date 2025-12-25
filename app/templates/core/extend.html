@@ -1,6 +1,6 @@
 {% extends "core/index.html" %} {% block title %} Add Cash {% endblock %} {%
 block appName %} Extend Budgets {% endblock %} {% block mainContent %}
-<form action={{url_for('core.extend')}} method="POST" class="addCashSection pl-6 pt-6 h-full" id="form">
+<form action="{{url_for('core.extend')}}" method="POST" class="addCashSection pl-6 pt-6 h-full" id="form">
   <div class="w-[40%] flex flex-col h-full gap-3">
   <p class="text-gray-200 text-[19px]">Choose Category to Extend Budget</p>
   <div>  

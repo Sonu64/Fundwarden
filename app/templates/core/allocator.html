@@ -1,8 +1,8 @@
 {% extends 'core/index.html' %} {% block title %} Budget Allocator {% endblock
 %} {% block appName %} Budget Allocator{% endblock %} {% block mainContent %}
 
-<div class="container flex">
-<form action="{{url_for('core.createCategory')}}" method="POST" class="text-white p-5 w-[60%] bg-gray-800" id="form">
+<div class="container flex items-center justify-evenly h-full">
+<form action="{{url_for('core.createCategory')}}" method="POST" class="overflow-hidden h-[300px] min-h-[300px] text-white p-5 pr-0 w-[100%] " id="form">
   <p class="mb-[20px]">Create a Category and allocate budgets</p>
   <p class="mb-[8px]">Category Name</p>
   <input
@@ -28,12 +28,19 @@
     </button>
   </div>
 </form>
-<section class="right flex flex-col w-full"><ul class="bg-white h-full text-black p-8">
+<section class="right flex flex-col w-full h-full justify-between bg-blue-00">
+  <h3 class="p-2.5  text-white font-bold">Your Categories and Budgets</h3>
+  <ul class="text-white h-[200px] min-h-[200px] text-black p-4 overflow-y-scroll bg-gray-700">
+    
     {% for category in categoriesList %}
         <li>{{category.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{category.budget}}</li>
     {% endfor %}
 </ul>
-<a href={{url_for('core.extend')}} class="text-cyan-300 font-bold border-2 p-3">Extend Budgets</a></section>
+<div class="extendBtn p-2.5 pb-0 pl-0 flex items-end mb-[20px]  justify-center">
+  <a href={{url_for('core.extend')}} class="text-lime-300 font-bold border-2 p-2 px-8 bg-transparent hover:bg-lime-300 hover:text-black mt-2.5">Extend Budgets</a>
+</div>
+
+</section>
 
 </div>
 
