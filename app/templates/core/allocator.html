@@ -1,35 +1,36 @@
 {% extends 'core/index.html' %} {% block title %} Budget Allocator {% endblock
 %} {% block appName %} Budget Allocator{% endblock %} {% block mainContent %}
 
-<div class="container flex items-center justify-evenly h-full">
-<form action="{{url_for('core.createCategory')}}" method="POST" class="overflow-hidden h-[300px] min-h-[300px] text-white p-5 pr-0 w-[100%] " id="form">
-  <p class="mb-[20px]">Create a Category and allocate budgets</p>
-  <p class="mb-[8px]">Category Name</p>
+<div class="container flex items-center justify-evenly bg-gray-800">
+<form action="{{url_for('core.createCategory')}}" method="POST" class="overflow-hidden h-[300px] min-h-[300px] text-white p-0  w-[100%]  h-full" id="form">
+  <h3 class="border-b-gray-600 p-4 border-b-2 font-bold text-yellow-300">Create a Category and allocate budgets</h3>
+  <p class="mb-[4px] mt-[20px] px-4">Category Name</p>
   <input
     type="text"
     name="category"
     id="category"
-    class="formInput w-[80%] mb-3"
+    class="formInput w-[80%] mb-3 ml-4"
     value = '{{ category if category else "" }}'
   />
-  <p class="mb-[8px]">Budget for that category</p>
+  <p class="mb-[4px] px-4">Budget for that category</p>
   <input
     type="number"
     name="budget"
     id="budget"
     min="0"
-    class="formInput w-[80%]"
+    class="formInput w-[80%] ml-4"
     value = '{{ budget if budget else "" }}'
     required
+
   />
   <div>
-    <button type="submit" class="authButton w-[80%] mt-4">
+    <button type="submit" class="authButton w-[80%] mt-4 ml-4">
       Create and Allocate
     </button>
   </div>
 </form>
-<section class="right flex flex-col w-full h-full justify-between bg-blue-00">
-  <h3 class="p-2.5  text-white font-bold">Your Categories and Budgets</h3>
+<section class="right flex flex-col w-full h-full justify-between border-l-2 border-l-gray-600">
+  <h3 class="p-4 border-b-gray-600  border-b-2 font-bold text-yellow-300">Your Categories and Budgets</h3>
   <ul class="text-white h-[200px] min-h-[200px] text-black p-4 overflow-y-scroll bg-gray-700">
     
     {% for category in categoriesList %}
@@ -37,7 +38,7 @@
     {% endfor %}
 </ul>
 <div class="extendBtn p-2.5 pb-0 pl-0 flex items-end mb-[20px]  justify-center">
-  <a href={{url_for('core.extend')}} class="text-lime-300 font-bold border-2 p-2 px-8 bg-transparent hover:bg-lime-300 hover:text-black mt-2.5">Extend Budgets</a>
+  <a href={{url_for('core.extend')}} class="text-yellow-300 font-bold border-2 border-white p-2 px-8 bg-transparent hover:bg-yellow-300 hover:border-yellow-300 hover:text-black mt-2.5">Extend Budgets</a>
 </div>
 
 </section>
