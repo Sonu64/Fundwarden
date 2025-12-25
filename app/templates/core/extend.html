@@ -4,14 +4,18 @@ block appName %} Extend Budgets {% endblock %} {% block mainContent %}
   <div class="w-[40%] flex flex-col h-full gap-3">
   <p class="text-gray-200 text-[19px]">Choose Category to Extend Budget</p>
   <div>  
-    <select name="category" id="category" class="text-white border-2 border-white w-full p-2.5">
-                <option value="" selected disabled hidden>Choose a Category</option>
+    <select name="category" id="category" class="text-white border-2 border-white w-full p-2.5 value={{category if category else ''}}">
+        <option value="" selected disabled hidden>Choose a Category</option>
         {% for c in categories %}
+          {% if category == c.name %}
+            <option value="{{c.name}}" selected class="bg-[#101828]">{{c.name}}</option>
+          {% else %}
             <option value="{{c.name}}" class="bg-[#101828]">{{c.name}}</option>
+            {% endif %}
         {% endfor %}
     </select>
     <p class="text-white mt-4">Extension Amount</p>
-    <input type="number" name="extension" id="extension" min = "0" class="formInput mt-2">
+    <input type="number" name="extension" id="extension" class="formInput mt-2 text-white" min="0" value="{{extension if extension else ''}}">
 </div>
 
   <div>
@@ -19,23 +23,4 @@ block appName %} Extend Budgets {% endblock %} {% block mainContent %}
 </div>
   
 </form>
-
-<script>
-  document.addEventListener("DOMContentLoaded", (event) => {
-    document.getElementById("form").addEventListener("submit", handleSubmit);
-  });
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    category = document.getElementById("category").value;
-    extension = document.getElementById("extension").value;
-
-    if (category.trim() === "") {
-      alert("Please Provide a category name !!");
-    } else {
-      //alert("Submitted !");
-      form.submit();
-    }
-  };
-</script>
 {% endblock %}
