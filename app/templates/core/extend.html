@@ -7,7 +7,7 @@ block appName %} Extend Budgets {% endblock %} {% block mainContent %}
     <select name="category" id="category" class="text-white border-2 border-white w-full p-2.5">
                 <option value="" selected disabled hidden>Choose a Category</option>
         {% for c in categories %}
-            <option value={{c.name}} class="bg-[#101828]">{{c.name}}</option>
+            <option value="{{c.name}}" class="bg-[#101828]">{{c.name}}</option>
         {% endfor %}
     </select>
     <p class="text-white mt-4">Extension Amount</p>

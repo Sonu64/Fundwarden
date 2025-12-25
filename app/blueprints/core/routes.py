@@ -99,7 +99,7 @@ def extend():
     elif req.method == 'POST':
         category = req.form.get('category')
         extension = req.form.get('extension')
-        
+        print(category, extension)
         filteredCategory = Categories.query.filter(Categories.name==category, Categories.userID==current_user.id).first() 
         # .first() or .all() is ALWAYS needed !!!!!!
         # .all() gives a List of Category Objects ---> all objects are Live Copies from the DB
