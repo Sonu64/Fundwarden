@@ -192,7 +192,10 @@ def tracker():
 
 
 
-
+@core.route("addExpense")
+@login_required
+def addExpense():
+    return render_template('core/addExpense.html')
 
 
 

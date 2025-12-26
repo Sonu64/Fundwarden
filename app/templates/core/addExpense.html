@@ -1,12 +1,13 @@
-{% extends 'core/index.html' %} {% block title %} Expense Tracker {% endblock %}
-{% block appName %} Expense Tracker {% endblock %} {% block mainContent %}
+{% extends 'core/index.html' %} {% block title %} Add Expenses {% endblock %} {%
+block appName %} Add Expense to a Category {% endblock %} {% block mainContent
+%}
 
 <div class="container flex items-center justify-evenly bg-gray-800">
   <section
     class="right flex flex-col w-full justify-between border-l-2 border-l-gray-600"
   >
     <h3 class="p-[16px] border-b-gray-600 border-b-2 font-bold text-yellow-300">
-      Your Categories and Budgets
+      ---------
     </h3>
 
     <div
@@ -15,14 +16,14 @@
       <p
         class="w-full text-amber-200 p-[16px] border-r-gray-900 border-r-2 font-bold"
       >
-        Category
+        ---------
       </p>
       <p
         class="w-full p-[16px] text-amber-200 font-bold border-r-gray-900 border-r-2"
       >
-        Allocated budget
+        ----------
       </p>
-      <p class="w-full p-[16px] text-amber-200 font-bold">Amount Spent</p>
+      <p class="w-full p-[16px] text-amber-200 font-bold">---------</p>
     </div>
 
     <div
@@ -43,7 +44,7 @@
       <a
         href="{{url_for('core.addExpense')}}"
         class="text-yellow-300 font-bold border-2 border-white p-2 px-8 bg-transparent hover:bg-yellow-300 hover:border-yellow-300 hover:text-black mt-2.5"
-        >Add an Expension</a
+        >------------</a
       >
     </div>
   </section>
