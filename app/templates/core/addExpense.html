@@ -1,55 +1,26 @@
-{% extends 'core/index.html' %} {% block title %} Add Expenses {% endblock %} {%
-block appName %} Add Expense to a Category {% endblock %} {% block mainContent
-%}
-
-<div class="container flex items-center justify-evenly bg-gray-800">
-  <section
-    class="right flex flex-col w-full justify-between border-l-2 border-l-gray-600"
-  >
-    <h3 class="p-[16px] border-b-gray-600 border-b-2 font-bold text-yellow-300">
-      ---------
-    </h3>
-
-    <div
-      class="flex w-full text-left border-b-2 border-b-gray-900 justify-center"
-    >
-      <p
-        class="w-full text-amber-200 p-[16px] border-r-gray-900 border-r-2 font-bold"
-      >
-        ---------
-      </p>
-      <p
-        class="w-full p-[16px] text-amber-200 font-bold border-r-gray-900 border-r-2"
-      >
-        ----------
-      </p>
-      <p class="w-full p-[16px] text-amber-200 font-bold">---------</p>
-    </div>
-
-    <div
-      class="text-white h-[140px] min-h-[140px] text-black border-r-gray-900 border-r-2 overflow-y-scroll bg-gray-700"
-    >
-      {% for category in categoriesList %}
-      <div class="flex w-full border-b-2 border-b-gray-900">
-        <p class="w-full p-[16px] border-r-2 border-r-gray-900">
-          {{category.name}}
-        </p>
-        <p class="w-full p-[16px]">{{category.budget}}</p>
-      </div>
-      {% endfor %}
-    </div>
-    <div
-      class="extendBtn p-2.5 pb-0 pl-0 flex items-end mb-[20px] justify-center"
-    >
-      <a
-        href="{{url_for('core.addExpense')}}"
-        class="text-yellow-300 font-bold border-2 border-white p-2 px-8 bg-transparent hover:bg-yellow-300 hover:border-yellow-300 hover:text-black mt-2.5"
-        >------------</a
-      >
-    </div>
-  </section>
+{% extends "core/index.html" %} {% block title %} Add Expenses {% endblock %} {%
+block appName %} Add Expense to a Category {% endblock %} {% block mainContent %}
+<form action="{{url_for('core.addExpense')}}" method="POST" class="addCashSection pl-6 pt-6 h-full" id="form">
+  <div class="w-[40%] flex flex-col h-full gap-3">
+  <p class="text-gray-200 text-[19px]">Choose Category to add an Expense</p>
+  <div>  
+    <select name="category" id="category" class="text-white border-2 border-white w-full p-2.5 value={{category if category else ''}}">
+        <option value="" selected disabled hidden>Choose a Category</option>
+        {% for c in categoriesList %}
+          {% if category == c.name %}
+            <option value="{{c.name}}" selected class="bg-[#101828]">{{c.name}}</option>
+          {% else %}
+            <option value="{{c.name}}" class="bg-[#101828]">{{c.name}}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <p class="text-white mt-4">Money Expent</p>
+    <input type="number" name="expense" id="extension" class="formInput mt-2 text-white" min="0" value="{{expense if expense else ''}}">
 </div>
 
-<script></script>
-
+  <div>
+    <button type="submit" class=" bg-emerald-600 px-[30px] text-white py-[10px] mt-[10px] border-2 border-white box-border hover:bg-emerald-800 cursor-pointer font-bold text-[17px]">Add Expense</button>
+</div>
+  
+</form>
 {% endblock %}

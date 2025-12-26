@@ -2,38 +2,33 @@
 {% block appName %} Expense Tracker {% endblock %} {% block mainContent %}
 
 <div class="container flex items-center justify-evenly bg-gray-800">
-  <section
-    class="right flex flex-col w-full justify-between border-l-2 border-l-gray-600"
-  >
+  <section class="right flex flex-col w-full border-l-2 border-l-gray-600">
     <h3 class="p-[16px] border-b-gray-600 border-b-2 font-bold text-yellow-300">
       Your Categories and Budgets
     </h3>
 
-    <div
-      class="flex w-full text-left border-b-2 border-b-gray-900 justify-center"
-    >
+    <div class="flex text-left w-full border-b-2 pt-0 pb-0 border-b-gray-900">
       <p
-        class="w-full text-amber-200 p-[16px] border-r-gray-900 border-r-2 font-bold"
+        class="text-amber-200 border-r-gray-900 border-r-2 font-bold pl-4 w-full"
       >
         Category
       </p>
       <p
-        class="w-full p-[16px] text-amber-200 font-bold border-r-gray-900 border-r-2"
+        class="text-amber-200 font-bold border-r-gray-900 border-r-2 pl-4 w-full"
       >
         Allocated budget
       </p>
-      <p class="w-full p-[16px] text-amber-200 font-bold">Amount Spent</p>
+      <p class="text-amber-200 font-bold pl-4 w-full">Amount Spent</p>
     </div>
 
     <div
       class="text-white h-[140px] min-h-[140px] text-black border-r-gray-900 border-r-2 overflow-y-scroll bg-gray-700"
     >
       {% for category in categoriesList %}
-      <div class="flex w-full border-b-2 border-b-gray-900">
-        <p class="w-full p-[16px] border-r-2 border-r-gray-900">
-          {{category.name}}
-        </p>
-        <p class="w-full p-[16px]">{{category.budget}}</p>
+      <div class="flex border-r-2 border-r-gray-900">
+        <p class="bg-blue-400 pl-4 w-full">{{category.name}}</p>
+        <p class="bg-red-500 pl-4 w-full">{{category.budget}}</p>
+        <p class="bg-green-700 pl-4 w-full">{{category.spent}}</p>
       </div>
       {% endfor %}
     </div>
