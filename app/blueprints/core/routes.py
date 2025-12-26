@@ -56,19 +56,26 @@ def createCategory():
         budget = req.form.get('budget')
         categoriesList = giveCategoriesListOfDicts()
 
-        if (categoryName.strip() == ""):
-            flash("Please Provide a Category name !", "danger")
-            return render_template('core/allocator.html',
-                                   categoriesList=categoriesList,
-                                   category="",
-                                   budget=budget)
+        try:
+            if (categoryName.strip() == ""):
+                flash("Please Provide a Category name !", "danger")
+                return render_template('core/allocator.html',
+                                    categoriesList=categoriesList,
+                                    category="",
+                                    budget=budget)
 
-        if (int(budget) == 0):
-            flash("Please Provide a Budget amount !", "danger")
+            if (int(budget) == 0):
+                flash("Please Provide a Budget amount !", "danger")
+                return render_template('core/allocator.html',
+                                    categoriesList=categoriesList,
+                                    category=categoryName,
+                                    budget="")
+        except (ValueError, TypeError):
+            flash("Please provide a Numeric Value for the Budget !", "danger")
             return render_template('core/allocator.html',
-                                   categoriesList=categoriesList,
-                                   category=categoryName,
-                                   budget="")
+                    categoriesList=categoriesList,
+                    category=categoryName,
+                    budget="")
 
         categoryName = categoryName.strip()
 
@@ -153,10 +160,55 @@ def extend():
         return "Invalid Request"
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @core.route('tracker')
 @login_required
 def tracker():
     return render_template('core/tracker.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # METHODS IRRESPECTIVE OF ROUTES #
