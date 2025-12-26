@@ -150,6 +150,8 @@ def createCategory():
         userID = current_user.id
         spent = 0
         remaining = budget
+        
+        current_user.balance -= int(budget)
 
         categoryObj = Categories(
             userID=userID,
@@ -194,6 +196,17 @@ def extend():
                 extension="",
             )
 
+
+        if extension > current_user.balance:
+            flash("Can't Extend beyond your Current Balance !", "danger")
+            return render_template(
+                "core/extend.html",
+                categories=categoriesList,
+                category=category,
+                extension="",
+            )
+        
+
         if not category or category.strip() == "":
             flash("Please Choose a Category !", "danger")
             return render_template(
@@ -222,7 +235,10 @@ def extend():
             flash("Error while fetching category name !", "danger")
             return redirect(url_for("core.allocator"))
 
+        
         filteredCategory.budget += int(extension)
+        filteredCategory.remaining += int(extension)
+        current_user.balance -= int(extension)
 
         # db.session.add(filteredCategory) # No need as filteredCategory is a Live Copy of the Row, though
         # db.session.commit() is needed as below
@@ -352,6 +368,6 @@ def giveCategoriesListOfDicts():
     categoriesList = []
     for c in categories:
         categoriesList.append(
-            {"name": c.name, "budget": c.budget, "spent": c.spent}
+            {"name": c.name, "budget": c.budget, "spent": c.spent, "remaining":c.remaining}
         )
     return categoriesList

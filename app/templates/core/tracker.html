@@ -19,6 +19,7 @@
         Allocated budget
       </p>
       <p class="text-amber-200 font-bold pl-4 w-full">Amount Spent</p>
+      <p class="text-amber-200 font-bold pl-4 w-full">Remaining Funds</p>
     </div>
 
     <div
@@ -29,6 +30,7 @@
         <p class="bg-blue-400 pl-4 w-full">{{category.name}}</p>
         <p class="bg-red-500 pl-4 w-full">{{category.budget}}</p>
         <p class="bg-green-700 pl-4 w-full">{{category.spent}}</p>
+        <p class="bg-indigo-500 pl-4 w-full">{{category.remaining}}</p>
       </div>
       {% endfor %}
     </div>
