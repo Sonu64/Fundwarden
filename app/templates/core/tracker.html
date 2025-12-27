@@ -1,45 +1,70 @@
 {% extends 'core/index.html' %} {% block title %} Expense Tracker {% endblock %}
-{% block appName %} Expense Tracker {% endblock %} {% block mainContent %}
+{% block appName %}
+<h2 class="text-2xl font-bold">Your Expenses</h2>
+{% endblock %} {% block mainContent %}
 
-<div class="container flex items-center justify-evenly bg-gray-800">
-  <section class="right flex flex-col w-full border-l-2 border-l-gray-600">
-    <h3 class="p-[16px] border-b-gray-600 border-b-2 font-bold text-yellow-300">
-      Your Categories and Budgets
-    </h3>
+<div class="container bg-gray-900 h-[400px] max-h-[400px]">
+  <section
+    class="right w-full border-l-2 border-l-gray-600 h-full flex flex-col justify-evenly"
+  >
+    <div class="p-6 pt-0 pb-0 text-white">
+      <div class="max-w-4xl mx-auto overflow-y-scroll h-[250px] max-h-[250px]">
+        <div
+          class="grid grid-cols-4 bg-white rounded-xl shadow-sm border border-gray-600 overflow-hidden"
+        >
+          <div
+            class="bg-gray-800 text-white px-3 py-2 text-lg font-semibold uppercase tracking-wider text-yellow-400"
+          >
+            Category
+          </div>
+          <div
+            class="bg-gray-800 text-white px-3 py-2 text-lg font-semibold uppercase text-yellow-400 tracking-wider"
+          >
+            Budget
+          </div>
+          <div
+            class="bg-gray-800 text-white px-3 py-2 text-lg font-semibold text-yellow-400 uppercase tracking-wider"
+          >
+            Spent
+          </div>
+          <div
+            class="bg-gray-800 text-white px-3 py-2 text-lg font-semibold text-yellow-400 uppercase tracking-wider"
+          >
+            Remaining
+          </div>
 
-    <div class="flex text-left w-full border-b-2 pt-0 pb-0 border-b-gray-900">
-      <p
-        class="text-amber-200 border-r-gray-900 border-r-2 font-bold pl-4 w-full"
-      >
-        Category
-      </p>
-      <p
-        class="text-amber-200 font-bold border-r-gray-900 border-r-2 pl-4 w-full"
-      >
-        Allocated budget
-      </p>
-      <p class="text-amber-200 font-bold pl-4 w-full">Amount Spent</p>
-      <p class="text-amber-200 font-bold pl-4 w-full">Remaining Funds</p>
-    </div>
+          {% for cat in categoriesList %}
+          <div
+            class="px-3 py-2 border-b border-gray-500 bg-gray-700 flex items-center"
+          >
+            <span class="font-bold text-white">{{ cat.name }}</span>
+          </div>
 
-    <div
-      class="text-white h-[140px] min-h-[140px] text-black border-r-gray-900 border-r-2 overflow-y-scroll bg-gray-700"
-    >
-      {% for category in categoriesList %}
-      <div class="flex border-r-2 border-r-gray-900">
-        <p class="bg-blue-400 pl-4 w-full">{{category.name}}</p>
-        <p class="bg-red-500 pl-4 w-full">{{category.budget}}</p>
-        <p class="bg-green-700 pl-4 w-full">{{category.spent}}</p>
-        <p class="bg-indigo-500 pl-4 w-full">{{category.remaining}}</p>
+          <div
+            class="font-bold px-3 py-4 border-b border-gray-500 bg-gray-700 text-white flex items-center"
+          >
+            ₹{{ "{:,}".format(cat.budget) }}
+          </div>
+
+          <div
+            class="px-3 py-4 border-b border-gray-500 bg-gray-700 text-red-400 font-bold flex items-center"
+          >
+            ₹{{ "{:,}".format(cat.spent) }}
+          </div>
+
+          <div
+            class="px-3 py-4 border-b border-gray-500 bg-gray-700 text-emerald-400 font-bold flex items-center"
+          >
+            ₹{{ "{:,}".format(cat.budget - cat.spent) }}
+          </div>
+          {% endfor %}
+        </div>
       </div>
-      {% endfor %}
     </div>
-    <div
-      class="extendBtn p-2.5 pb-0 pl-0 flex items-end mb-[20px] justify-center"
-    >
+    <div class="extendBtn flex items-center justify-center h-auto">
       <a
         href="{{url_for('core.addExpense')}}"
-        class="text-yellow-300 font-bold border-2 border-white p-2 px-8 bg-transparent hover:bg-yellow-300 hover:border-yellow-300 hover:text-black mt-2.5"
+        class="text-yellow-300 font-bold border-2 border-white p-2 px-8 bg-transparent hover:bg-yellow-300 hover:border-yellow-300 hover:text-black"
         >Add an Expension</a
       >
     </div>
