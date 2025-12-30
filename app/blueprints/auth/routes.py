@@ -96,15 +96,15 @@ def register():
                                                            
 
         ## When every condiition above doesn't hold true ##
-        
+        token = User.generateEmailConfirmToken(email, name, password) 
+        resetLink = url_for('auth.confirmEmail', token = token, _external = True)
+        # Send Reset Link via E-Mail
+        msg = Message("E-Mail Confirmation Request", sender = "sonusantu64@gmail.com", recipients = [email])
+        msg.body = f"Fundwarden E-mail confirmation Link: {resetLink}"
+        mail.send(msg)
 
-        # Hashing Password
-        hashedPassword = bcrypt.generate_password_hash(password).decode('utf-8')
-        userObject = User(email = email, name = name, password = hashedPassword, balance = 1000)
-        db.session.add(userObject)
-        db.session.commit()
-        flash("Registration Successful ! You can Log In now 😊", 'success')
-        return redirect(url_for('auth.login')) 
+        flash("Please confirm your E-mail via the Link sent to the E-mail Address you provided 😊", 'info')
+        return redirect(url_for('login')) 
     else:
         return "Invalid Request !"
     
@@ -177,6 +177,48 @@ def resetPassword(token):
         print("Password updated !")
         flash("Your Password has been updated !", "success")
         return redirect(url_for('auth.login'))
+    else:
+        return "Invalid Request !"
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+@auth.route("confirmEmail/<token>", methods = ['GET', 'POST'])
+def confirmEmail(token):
+    email = User.verifyResetToken(token) # Decode the E-Mail part from the token
+    user = User.query.filter(User.email == email).first()
+    
+    if user:
+        flash("Can't Verify E-Mail as this E-mail is already linked to an account !", "danger")
+        return redirect(url_for('auth.forgotPassword'))
+    
+    if req.method == 'GET':
+        # A Valid GET request, matching the URL syntax can only be sent by clicking on the Link sent via e-mail
+        return render_template('auth/reset.html', token = token, password = "", confirm = "")
+    
+    elif req.method == 'POST':
+        
     else:
         return "Invalid Request !"
     
