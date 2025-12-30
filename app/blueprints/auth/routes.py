@@ -27,9 +27,10 @@ def login():
     elif req.method == 'POST':
         email = req.form.get('email')
         password = req.form.get('password')
+        emailRegex  = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         
-        if email.strip() == "" or len(password) == 0:
-            flash("Please Provide an E-Mail Address and Password", "danger")
+        if email.strip() == "" or len(password) == 0 or not re.match(emailRegex, email):
+            flash("Please Provide a valid E-Mail Address and Password", "danger")
             return render_template('auth/login.html', email = email, password = "")
         
         # Get Row for the Username
@@ -64,8 +65,9 @@ def register():
         name = req.form.get("name")
         password = req.form.get("password")
         confirm = req.form.get("confirm")
+        emailRegex  = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         
-        if email.strip()=="" or name.strip=="":
+        if email.strip()=="" or name.strip=="" or not re.match(emailRegex, email):
             flash("Please Provide a Valid E-Mail address and your Full-name !", 'danger')
             return render_template('auth/register.html', email = email, name = name, password = password, confirm = confirm)
         
