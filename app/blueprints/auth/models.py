@@ -52,20 +52,22 @@ class User(db.Model, UserMixin):
     @staticmethod
     def generateEmailConfirmToken(email, name, password):
         s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
-        return s.dumps(token = {
+        payload = {
         "email": email,
         "name": name,
         "password": password
-    }, salt = "Email_Reset_Salt")
+    }
+        return s.dumps(payload, salt = "Email_Reset_Salt")
         
         
         
         
     @staticmethod
-    def verifyEmailResetToken(token, expirationTime = 300):
+    def verifyEmailResetToken(token, expirationTime = 100):
         s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
         try:
             payload = s.loads(token, salt = "Email_Reset_Salt", max_age = expirationTime)
+            print("\n\n\n\n" + str(payload) + "\n\n\n\n")
             return payload
         except Exception as e:
             print(e)

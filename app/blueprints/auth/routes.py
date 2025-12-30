@@ -104,7 +104,7 @@ def register():
         mail.send(msg)
 
         flash("Please confirm your E-mail via the Link sent to the E-mail Address you provided 😊", 'info')
-        return redirect(url_for('login')) 
+        return redirect(url_for('auth.login')) 
     else:
         return "Invalid Request !"
     
@@ -204,21 +204,36 @@ def resetPassword(token):
     
     
     
-@auth.route("confirmEmail/<token>", methods = ['GET', 'POST'])
+@auth.route("confirmEmail/<token>", methods = ['GET'])
 def confirmEmail(token):
-    email = User.verifyResetToken(token) # Decode the E-Mail part from the token
-    user = User.query.filter(User.email == email).first()
-    
-    if user:
-        flash("Can't Verify E-Mail as this E-mail is already linked to an account !", "danger")
-        return redirect(url_for('auth.forgotPassword'))
-    
+
     if req.method == 'GET':
-        # A Valid GET request, matching the URL syntax can only be sent by clicking on the Link sent via e-mail
-        return render_template('auth/reset.html', token = token, password = "", confirm = "")
+        payload = User.verifyEmailResetToken(token) # Decode the E-Mail part from the token
+        if not payload:
+            flash("Link Expired !", 'danger')
+            return redirect(url_for('auth.register'))
+        print(payload)
+        user = User.query.filter(User.email == payload['email']).first()
     
-    elif req.method == 'POST':
+        if user:        
+            flash("Can't Verify E-Mail as this E-mail is already linked to an account !", "danger")
+            return redirect(url_for('auth.register'))
         
+        # Process of putting Data in Database
+        email = payload['email']
+        name = payload['name']
+        hashedPassword = bcrypt.generate_password_hash(payload['password'])
+        userObject = User(email=email, name=name, password=hashedPassword, balance=0)
+        try:
+            db.session.add(userObject)
+            db.session.commit()        
+            flash("E-Mail Verified ! You can Login now 😀", 'success')
+            return redirect(url_for('auth.login'))
+        except Exception as e:
+            flash("Some Error occured while Registering !", 'danger')
+            print("\n\n\n" + str(e) + "\n\n\n")
+            return redirect(url_for('auth.register'))
     else:
         return "Invalid Request !"
+    
     
