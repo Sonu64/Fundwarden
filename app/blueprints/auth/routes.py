@@ -144,7 +144,7 @@ def forgotPassword():
         return "Invalid Request !"
     
 
-# Use the Token as an URL Parameter to generate different reset links for different users
+
 @auth.route("resetPassword/<token>", methods = ['GET', 'POST'])
 def resetPassword(token):
     email = User.verifyResetToken(token) # Decode the E-Mail part from the token
@@ -155,7 +155,7 @@ def resetPassword(token):
         return redirect(url_for('auth.forgotPassword'))
     
     if req.method == 'GET':
-        # A Valid GET request, matching the URL syntax can only be sent by clicking on the Link sent via e-mail
+        
         return render_template('auth/reset.html', token = token, password = "", confirm = "")
     
     elif req.method == 'POST':
@@ -208,7 +208,7 @@ def resetPassword(token):
 def confirmEmail(token):
 
     if req.method == 'GET':
-        payload = User.verifyEmailResetToken(token) # Decode the E-Mail part from the token
+        payload = User.verifyEmailConfirmToken(token) # Decode the payload dict. part from the token
         if not payload:
             flash("Link Expired !", 'danger')
             return redirect(url_for('auth.register'))

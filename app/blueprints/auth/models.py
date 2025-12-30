@@ -63,7 +63,7 @@ class User(db.Model, UserMixin):
         
         
     @staticmethod
-    def verifyEmailResetToken(token, expirationTime = 100):
+    def verifyEmailConfirmToken(token, expirationTime = 100):
         s = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
         try:
             payload = s.loads(token, salt = "Email_Reset_Salt", max_age = expirationTime)
