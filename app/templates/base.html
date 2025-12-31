@@ -70,7 +70,7 @@
         >
         {% else %}
         <a
-          href="#"
+          href="{{url_for('auth.index')}}"
           class="text-[1.1rem] py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out"
           >Home</a
         >
@@ -182,19 +182,19 @@
             >
             {% else %}
             <a
-              href="#"
+              href="{{url_for('auth.index')}}"
               class="border-t-1 border-[#5d5c5e] text-[1.1rem] py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out w-full flex justify-center mb-[0px]"
               >Home</a
             >
             {% endif %}
             <a
-              href="#"
+              href="{{ url_for('auth.features') }}"
               class="border-t-1 border-[#5d5c5e] text-[1.1rem] py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out w-full flex justify-center mb-[0px]"
               >Features</a
             >
 
             <a
-              href="#"
+              href="{{ url_for('auth.credits') }}"
               class="border-t-1 border-b-1 border-[#5d5c5e] text-[1.1rem] py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out w-full flex justify-center mb-[0px]"
               >Credits</a
             >
