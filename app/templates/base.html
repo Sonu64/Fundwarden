@@ -50,7 +50,7 @@
       {% endif %} {% endfor %} {% endif %} {% endwith %}
     </div>
     <nav
-      class="bg-primaryDark text-white flex items-center fixed w-full md:h-[70px] md:justify-evenly md:flex hidden md:text-2xl top-0"
+      class="bg-primaryDark text-white flex items-center fixed w-full md:h-[70px] md:justify-evenly md:flex hidden md:text-2xl top-0 z-20"
     >
       <div class="h-full flex justify-center items-center relative">
         <a href="#" class="h-full flex items-center pr-2">
@@ -76,13 +76,13 @@
         >
         {% endif %}
         <a
-          href="#"
+          href="{{ url_for('auth.features') }}"
           class="text-[1.1rem] py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out"
           >Features</a
         >
 
         <a
-          href="#"
+          href="{{ url_for('auth.credits') }}"
           class="text-[1.1rem] py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out"
           >Credits</a
         >

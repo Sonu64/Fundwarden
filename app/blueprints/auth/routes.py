@@ -182,7 +182,14 @@ def resetPassword(token):
     
     
     
-    
+@auth.route('features')
+def features():
+    return render_template('auth/features.html')
+
+
+@auth.route('credits')
+def credits():
+    return render_template('auth/credits.html')
     
     
     

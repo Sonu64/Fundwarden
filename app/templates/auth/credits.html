@@ -1,0 +1,38 @@
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='dist/main.css')}}"
+    />
+    {% extends "base.html" %}
+    {% block title %} Fundwarden: Credits {% endblock %}
+
+    {% block content %}
+    
+    <div class="flex w-full flex-col gap-6 bg-linear-to-r md:justify-center from-emerald-800 via-indigo-800 to-emerald-800 justify-center items-center top-[70px] relative h-[calc(100vh-70px)]">
+        <h1 class="text-gray-200 text-center md:text-4xl text-3xl  w-full px-15">
+            Fundwarden - &nbsp;Credits
+        </h1>
+        <p class="md:px-40 px-20 text-center md:text-lg text-[1rem] text-indigo-100/70 w-full leading-relaxed font-light ">
+    Take control of your financial future with precision. 
+    <span class="text-emerald-300 font-medium">Allocate</span> your monthly balance into smart categories and 
+    <span class="text-emerald-300 font-medium">Track</span> every expense with total clarity and discipline.
+</p>
+        <div class="w-full flex flex-col md:flex-row items-center justify-center gap-5 ">
+          <a href="{{url_for('auth.login')}}" class="w-[200px] p-3 text-sm md:w-[200px]  border-2 text-white md:text-lg font-bold border-white block text-center transition-all duration-150 ease-in hover:text-black hover:bg-white">Start Tracking Now</a>
+          <a href="{{url_for('auth.register')}}" class="w-[200px] p-3 text-sm md:w-[200px] border-2 text-white md:text-lg font-bold border-white block text-center transition-all duration-150 ease-in hover:text-black hover:bg-white">Create an Account</a>
+        </div>
+        
+      </div>
+        
+    {% endblock %}
+  <script
+    src="https://kit.fontawesome.com/a3d72c8bc7.js"
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    const handleMenu = () => {
+      const navContent = document.getElementById("navContent");
+      navContent.classList.toggle("hidden");
+    };
+  </script>
+  <!-- <script src=".../Static/js/script.js"></script> -->
+</html>
