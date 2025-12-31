@@ -6,15 +6,17 @@
     {% block title %} Fundwarden: Landing Page{% endblock %}
 
     {% block content %}
-    <div class="flex w-full flex-col gap-7 bg-gray-700 justify-center items-center top-[70px] relative h-[calc(100vh-70px)]">
-        <h1 class="text-gray-200 text-center text-3xl bg-black w-full">
-            Fundwarden Landing Page , auth.index
+    <div class="flex w-full flex-col gap-6 bg-linear-to-r  from-emerald-800 via-indigo-800 to-emerald-800 justify-center items-center top-[70px] relative h-[calc(100vh-70px)]">
+        <h1 class="text-gray-200 text-center text-4xl  w-full">
+            Fundwarden - &nbsp;Budget with Purpose, Track with Ease.
         </h1>
-        <p class="w-[60%] text-center text-white text-lg">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt aliquid numquam reprehenderit at eius in quidem consectetur illum ut ipsum?
-        </p>
+        <p class="text-center text-lg md:text-xl text-indigo-100/70 max-w-2xl mx-auto leading-relaxed font-light ">
+    Take control of your financial future with precision. 
+    <span class="text-emerald-300 font-medium">Allocate</span> your monthly balance into smart categories and 
+    <span class="text-emerald-300 font-medium">Track</span> every expense with total clarity and discipline.
+</p>
         <div class=" w-full flex justify-center gap-5">
-          <a href="{{url_for('auth.login')}}" class="w-[200px] p-3 border-2 text-white text-lg border-white inline-block text-center">Start Tracking Now</a>
+          <a href="{{url_for('auth.login')}}" class="w-[200px] p-3 border-2 text-black text-lg border-white inline-block text-center bg-white hover:text-white hover:bg-transparent">Start Tracking Now</a>
           <a href="{{url_for('auth.login')}}" class="w-[200px] p-3 border-2 text-white text-lg border-white inline-block text-center ">Create an Account</a>
         </div>
       </div>
