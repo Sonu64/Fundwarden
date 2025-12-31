@@ -6,6 +6,7 @@
     {% block title %} Fundwarden: Landing Page{% endblock %}
 
     {% block content %}
+    
     <div class="flex w-full flex-col gap-6 bg-linear-to-r md:justify-center from-emerald-800 via-indigo-800 to-emerald-800 justify-center items-center top-[70px] relative h-[calc(100vh-70px)]">
         <h1 class="text-gray-200 text-center md:text-4xl text-3xl  w-full px-15">
             Fundwarden - &nbsp;Budget with Purpose, Track with Ease.
@@ -19,6 +20,7 @@
           <a href="{{url_for('auth.login')}}" class="w-[200px] p-3 text-sm md:w-[200px]  border-2 text-white md:text-lg font-bold border-white block text-center transition-all duration-150 ease-in hover:text-black hover:bg-white">Start Tracking Now</a>
           <a href="{{url_for('auth.register')}}" class="w-[200px] p-3 text-sm md:w-[200px] border-2 text-white md:text-lg font-bold border-white block text-center transition-all duration-150 ease-in hover:text-black hover:bg-white">Create an Account</a>
         </div>
+        
       </div>
         
     {% endblock %}
