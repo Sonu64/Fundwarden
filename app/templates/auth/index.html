@@ -6,11 +6,18 @@
     {% block title %} Fundwarden: Landing Page{% endblock %}
 
     {% block content %}
-            <main class="flex w-full bg-yellow-600 justify-center items-center top-[250px] relative">
-              <h1 class="text-gray-200 text-center text-3xl text-bold bg-black py-4 w-[80%]">
+    <div class="flex w-full flex-col gap-7 bg-gray-700 justify-center items-center top-[70px] relative h-[calc(100vh-70px)]">
+        <h1 class="text-gray-200 text-center text-3xl bg-black w-full">
             Fundwarden Landing Page , auth.index
         </h1>
-    </main>
+        <p class="w-[60%] text-center text-white text-lg">
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt aliquid numquam reprehenderit at eius in quidem consectetur illum ut ipsum?
+        </p>
+        <div class=" w-full flex justify-center gap-5">
+          <a href="{{url_for('auth.login')}}" class="w-[200px] p-3 border-2 text-white text-lg border-white inline-block text-center">Start Tracking Now</a>
+          <a href="{{url_for('auth.login')}}" class="w-[200px] p-3 border-2 text-white text-lg border-white inline-block text-center ">Create an Account</a>
+        </div>
+      </div>
         
     {% endblock %}
   <script
