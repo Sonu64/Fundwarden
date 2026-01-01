@@ -18,7 +18,7 @@
 
 @layer components {
   .auth-card {
-    @apply lg:w-[40%] md:w-[55%] w-[85%] bg-amber-300 h-[402px] max-h-[402px];
+    @apply lg:w-[46%] md:w-[80%] sm:w-[70%] bg-amber-300 h-[402px] max-h-[402px];
     @apply bg-cardDark text-white;
     @apply rounded-card shadow-lg;
     @apply flex flex-col;
