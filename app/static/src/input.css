@@ -18,7 +18,7 @@
 
 @layer components {
   .auth-card {
-    @apply lg:w-[46%] md:w-[80%] sm:w-[70%] bg-amber-300 h-[402px] max-h-[402px];
+    @apply w-[88%] sm:w-[70%] lg:w-[45%] bg-amber-300 sm:h-[403px] sm:max-h-[403px];
     @apply bg-cardDark text-white;
     @apply rounded-card shadow-lg;
     @apply flex flex-col;
@@ -28,9 +28,6 @@
   .mainContent {
     @apply flex w-full bg-yellow-600 justify-center items-center h-[calc(100vh-70px)] relative top-[70px];
     @apply items-center justify-center;
-  }
-  .register-card {
-    @apply h-[433px] max-h-[433px];
   }
   .formContent {
     @apply flex flex-col gap-4 py-4 h-full justify-evenly;

@@ -13,20 +13,20 @@
 
 
         <main class="top-[70px] h-[calc(100vh-70px)] relative text-amber-600 text-center text-3xl text-bold w-full bg-bodyDark flex justify-center items-center">
-            <form action="#" method="post" class="auth-card" id="login-form">
+            <form action="#" method="post" class="auth-card sm:h-[403px] sm:max-h[403px] h-[520px] max-h-[520px] mt-[11px]" id="login-form">
               <h1 class="formHeading px-[40px]">Login</h1>
               <div class="formContent">
-            <div class="px-[40px] ">
+            <div class="px-[30px] mb-[6px]">
                 <p class="labelText">E-Mail</p>
                 <input type="email" name="email" id="email" class="formInput" placeholder="E-Mail" autocomplete="off" value = {{ email if email else ""}}>
             </div>
-            <div class="px-[40px] "> 
+            <div class="px-[30px] mb-[6px]"> 
                 <p class="labelText">Password</p>
                 <input type="password" name="password" id="password" class="formInput" placeholder="Password" value = {{password if password else ""}}>
             </div>
-            <div class="px-[40px] ">
+            <div class="px-[30px] ">
                 <button type="submit" class="authButton">Login</button></div>
-            <div class="px-[40px] flex text-sm justify-center items-start gap-2 flex-col justify-evenly gap-[6px] justify-between"> 
+            <div class="px-[40px] pb-[16px] flex text-sm justify-center items-start gap-2 flex-col justify-evenly gap-[6px] justify-between"> 
                 <a href="{{ url_for('auth.forgotPassword') }}" class="cardLink">Forgot Password ?</a>
                 <span class="text-tiny">Don't have an Account ?<a href="{{url_for('auth.register')}}" class="cardLink ml-1">Register Now !</a></span>
             </div>
