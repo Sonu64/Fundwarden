@@ -1,8 +1,8 @@
 {% extends 'core/index.html' %} {% block title %} Budget Allocator {% endblock
 %} {% block appName %} Budget Allocator{% endblock %} {% block mainContent %}
 
-<div class="container flex items-center justify-evenly bg-gray-800">
-<form action="{{url_for('core.createCategory')}}" method="POST" class="overflow-hidden h-[300px] min-h-[300px] text-white p-0  w-[100%]  h-full" id="form">
+<div class="container flex items-center justify-evenly bg-cardDark">
+<form action="{{url_for('core.createCategory')}}" method="POST" class="overflow-hidden h-[300px] min-h-[300px] text-white p-0  w-[100%]  h-full bg-cardDark rounded-md rounded-t-none" id="form">
   <h3 class="border-b-gray-600 p-[16px] border-b-2 font-bold text-yellow-300">Create a Category and allocate budgets</h3>
   <p class="mb-[4px] mt-[20px] px-[16px]">Category Name</p>
   <input

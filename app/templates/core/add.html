@@ -1,6 +1,6 @@
 {% extends "core/index.html" %} {% block title %} Add Cash {% endblock %} {%
 block appName %} Add Cash {% endblock %} {% block mainContent %}
-<form action={{url_for('core.add')}} method="POST" class="addCashSection pl-6 pt-6 h-full">
+<form action={{url_for('core.add')}} method="POST" class="addCashSection pl-6 pt-6 h-full bg-cardDark rounded-md rounded-t-none">
   <div class="w-[40%] flex flex-col h-full gap-3">
   <p class="text-gray-200 text-[19px]">Enter Cash Amount to Add</p>
   <div>  

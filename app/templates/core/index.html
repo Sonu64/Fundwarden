@@ -6,30 +6,25 @@
     {% block title %} Dashboard {% endblock %}
 
     {% block content %}
-    <main class="mainContent">
-            <div class="card w-[85%] bg-gray-900 flex flex-col h-[418px] max-h-[418px]">
+    <main class="mainContent bg-gray-900 w-full">
+            <div class="card flex flex-col h-[418px] max-h-[418px] w-[90%] sm:w-[50%]">
 
-              <div class="dashboard-heading p-6 text-white text-2xl bg-indigo-700">
-                {% block appName %}<h1>Financial Overview : {{ current_user.name }}</h1> {%endblock%}
+              <div class="dashboard-heading p-6 text-white text-2xl bg-indigo-700 "style="border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;">
+                {% block appName %}<h1>💰&nbsp;Fundwarden for <span class="font-bold">{{ current_user.name }}</span></h1> {%endblock%}
               </div>
 
               {% block mainContent %}
-              <div class="dashboard-sections flex bg-white h-full">
-                <section class="dashboard-section border-r-3 w-[50%] flex flex-col items-start p-5 justify-evenly gap-3 bg-cardDark">
-                    <h2 class="bg-gray-900 text-white w-full pl-6 p-5 text-xl">Total Cash Available: <span class="text-yellow-500 font-bold text-2xl"> ₹ {{current_user.balance}}</span></h2>
+              <div class="dashboard-sections flex bg-cardDark h-full w-full rounded-md rounded-t-none">
+                <section class="dashboard-section w-full flex flex-col items-start p-5 justify-evenly gap-2 bg-cardDark rounded-md">
+                    <h2 class="bg-gray-900 text-white w-full pl-6 p-5 text-xl">Monthly Balance: <span class="text-yellow-500 font-bold text-2xl"> ₹ {{current_user.balance}}</span></h2>
                     <div class="actions flex flex-col gap-2 w-full">
                       <a href={{url_for('core.add')}} class="actionBtn bg-emerald-600 text-white font-bold">Add Cash</a>
                       <a href={{url_for('core.tracker')}} class="actionBtn bg-orange-600 text-white font-bold">Expense Tracker</a>
                       <a href={{url_for('core.allocator')}} class="actionBtn bg-purple-600 font-bold text-white">Budget Allocator</a>
                     </div>
                 </section>
-                <section class="dashboard-section w-[50%] flex flex-col items-start p-5">
-                    <h2>A Transaction details</h2>
-                    <h2>A Transaction details</h2>
-                    <h2>A Transaction details</h2>
-                    <h2>A Transaction details</h2>
-                    <h2>A Transaction details</h2>
-                </section>
+                
               </div>
               {% endblock %}
             </div>

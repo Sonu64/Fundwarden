@@ -6,7 +6,7 @@
 
 @theme {
   --color-primaryDark: #3b3939;
-  --height-pcNavHeight: 80px;
+  --height-pcNavHeight: 70px;
   --color-bodyDark: #151b23;
   --color-cardDark: rgb(51, 50, 50);
   --color-inputDark: #474747;
@@ -26,8 +26,9 @@
   }
 
   .mainContent {
-    @apply flex w-full bg-yellow-600 justify-center items-center h-[calc(100vh-70px)] relative top-[70px];
+    @apply flex w-full justify-center items-center h-[calc(100vh-70px)] relative top-[70px];
     @apply items-center justify-center;
+    @apply w-[90%] sm:w-[50%];
   }
   .formContent {
     @apply flex flex-col gap-4 py-4 h-full justify-evenly;
@@ -57,5 +58,9 @@
     @apply border-2 w-[200px] p-2.5 pl-6;
   }
   .addCashSection {
+  }
+
+  .card {
+    @apply rounded-md;
   }
 }

@@ -64,7 +64,7 @@
       >
         {% if current_user.is_authenticated %}
         <a
-          href="#"
+          href="{{ url_for('core.index') }}"
           class="text-[1.1rem] py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out"
           >Dashboard</a
         >
@@ -176,7 +176,7 @@
           <div id="navMiddle" class="w-full">
             {% if current_user.is_authenticated %}
             <a
-              href="#"
+              href="{{ url_for('core.index') }}"
               class="border-t-1 border-[#5d5c5e] text-[1.1rem] py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out w-full flex justify-center mb-[0px]"
               >Dashboard</a
             >
