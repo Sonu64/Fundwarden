@@ -3,7 +3,7 @@
 <h2 class="text-2xl font-bold">Your Expenses</h2>
 {% endblock %} {% block mainContent %}
 
-<div class="container bg-gray-900 h-[400px] max-h-[400px] w-full">
+<div class="container h-[400px] max-h-[400px] w-full">
   <section
     class="right w-full bg-cardDark rounded-md rounded-t-none border-l-gray-600 h-full flex flex-col justify-evenly text-tiny"
   >
@@ -98,13 +98,11 @@
     <div class="extendBtn flex items-center justify-center h-auto">
       <a
         href="{{url_for('core.addExpense')}}"
-        class="text-yellow-300 fbg-transparent text-red-400 px-3 py-2 text-tiny uppercase font-semibold md:hidden block bg-gray-800ont-bold border-2 border-white p-2 px-8 bg-transparent hover:bg-yellow-300 hover:border-yellow-300 hover:text-black"
+        class="text-yellow-300 bg-transparent text-red-400 px-3 py-2 text-tiny uppercase font-semibold block bg-gray-800 font-bold border-2 border-white p-2 px-8 bg-transparent hover:bg-yellow-300 hover:border-yellow-300 hover:text-black"
         >Add a Spending</a
       >
     </div>
   </section>
 </div>
-
-<script></script>
 
 {% endblock %}
