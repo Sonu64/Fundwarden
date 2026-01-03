@@ -3,32 +3,32 @@
 <h2 class="text-2xl font-bold">Your Expenses</h2>
 {% endblock %} {% block mainContent %}
 
-<div class="container bg-gray-900 h-[400px] max-h-[400px]">
+<div class="container bg-gray-900 h-[400px] max-h-[400px] w-full">
   <section
-    class="right w-full bg-cardDark rounded-md rounded-t-none border-l-gray-600 h-full flex flex-col justify-evenly"
+    class="right w-full bg-cardDark rounded-md rounded-t-none border-l-gray-600 h-full flex flex-col justify-evenly text-tiny"
   >
-    <div class="p-6 pt-0 pb-0 text-white">
+    <div class="p-6 pt-0 pb-0 text-white w-full">
       <div class="max-w-4xl mx-auto overflow-y-scroll h-[250px] max-h-[250px]">
         <div
-          class="grid grid-cols-4 bg-white rounded-xl shadow-sm border border-gray-600 overflow-hidden"
+          class="grid md:grid-cols-4 grid-cols-1 bg-black rounded-xl shadow-sm border border-gray-600 overflow-hidden"
         >
           <div
-            class="bg-gray-800 text-white px-3 py-2 text-lg font-semibold uppercase tracking-wider text-yellow-400"
+            class="bg-gray-800 text-white px-3 py-2 text-tiny uppercase text-yellow-400 hidden md:block"
           >
             Category
           </div>
           <div
-            class="bg-gray-800 text-white px-3 py-2 text-lg font-semibold uppercase text-yellow-400 tracking-wider"
+            class="bg-gray-800 text-white px-3 py-2 text-tiny uppercase text-yellow-400 hidden md:block"
           >
             Budget
           </div>
           <div
-            class="bg-gray-800 text-white px-3 py-2 text-lg font-semibold text-yellow-400 uppercase tracking-wider"
+            class="bg-gray-800 text-white px-3 py-2 text-tiny text-yellow-400 uppercase hidden md:block"
           >
             Spent
           </div>
           <div
-            class="bg-gray-800 text-white px-3 py-2 text-lg font-semibold text-yellow-400 uppercase tracking-wider"
+            class="bg-gray-800 text-white px-3 py-2 text-tiny text-yellow-400 uppercase hidden md:block"
           >
             Remaining
           </div>
@@ -37,25 +37,59 @@
           <div
             class="px-3 py-2 border-b border-gray-500 bg-gray-700 flex items-center"
           >
-            <span class="font-bold text-white">{{ cat.name }}</span>
+            <div
+              class="text-yellow-400 px-3 py-2 text-tiny uppercase font-semibold md:hidden block bg-gray-800 mr-3"
+            >
+              Category
+            </div>
+
+            <span
+              class="font-bold text-white inline-block max-w-[20ch] break-all text-base"
+              >{{ cat.name }}</span
+            >
           </div>
 
           <div
             class="font-bold px-3 py-4 border-b border-gray-500 bg-gray-700 text-white flex items-center"
           >
-            ₹{{ "{:,}".format(cat.budget) }}
+            <div
+              class="text-orange-400 px-3 py-2 text-tiny uppercase font-semibold md:hidden block bg-gray-800 mr-3"
+            >
+              Budget
+            </div>
+
+            <span
+              class="font-bold text-white inline-block max-w-[20ch] break-all text-base"
+              >₹{{ "{:,}".format(cat.budget) }}</span
+            >
           </div>
 
           <div
             class="px-3 py-4 border-b border-gray-500 bg-gray-700 text-red-400 font-bold flex items-center"
           >
-            ₹{{ "{:,}".format(cat.spent) }}
+            <div
+              class="text-text-400 px-3 py-2 text-tiny uppercase font-semibold md:hidden block bg-gray-800 mr-3"
+            >
+              Spent
+            </div>
+            <span
+              class="font-bold text-red-400 inline-block max-w-[20ch] break-all text-base"
+              >₹{{ "{:,}".format(cat.spent) }}</span
+            >
           </div>
 
           <div
-            class="px-3 py-4 border-b border-gray-500 bg-gray-700 text-emerald-400 font-bold flex items-center"
+            class="px-3 py-4 border-b border-gray-500 bg-gray-700 text-emerald-400 font-bold flex items-center mb-6 md:mb-0"
           >
-            ₹{{ "{:,}".format(cat.budget - cat.spent) }}
+            <div
+              class="text-emerald-400 px-3 py-2 text-tiny uppercase font-semibold md:hidden block bg-gray-800 mr-3"
+            >
+              Remaining
+            </div>
+            <span
+              class="font-bold text-emerald-400 inline-block max-w-[20ch] break-all text-base"
+              >₹{{ "{:,}".format(cat.budget - cat.spent) }}</span
+            >
           </div>
           {% endfor %}
         </div>
@@ -64,7 +98,7 @@
     <div class="extendBtn flex items-center justify-center h-auto">
       <a
         href="{{url_for('core.addExpense')}}"
-        class="text-yellow-300 font-bold border-2 border-white p-2 px-8 bg-transparent hover:bg-yellow-300 hover:border-yellow-300 hover:text-black"
+        class="text-yellow-300 fbg-transparent text-red-400 px-3 py-2 text-tiny uppercase font-semibold md:hidden block bg-gray-800ont-bold border-2 border-white p-2 px-8 bg-transparent hover:bg-yellow-300 hover:border-yellow-300 hover:text-black"
         >Add a Spending</a
       >
     </div>
