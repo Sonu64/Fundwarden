@@ -26,9 +26,10 @@
   }
 
   .mainContent {
-    @apply flex w-full justify-center items-center h-[calc(100vh-70px)] relative top-[70px];
+    @apply flex w-full h-[calc(100vh-70px)] relative top-[70px];
     @apply items-center justify-center;
     @apply w-full md:w-[70%];
+    @apply bg-transparent;
   }
   .formContent {
     @apply flex flex-col gap-4 py-4 h-full justify-evenly;
