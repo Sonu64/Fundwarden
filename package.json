@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tailwind": "npx @tailwindcss/cli -i app/static/src/input.css -o app/static/dist/main.css --watch"
+    "tailwind": "npx @tailwindcss/cli -i app/static/src/features_src.css -o app/static/dist/features.css --content 'app/templates/**/*.html' --watch"
   },
   "repository": {
     "type": "git",

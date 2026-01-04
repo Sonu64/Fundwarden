@@ -1,61 +1,307 @@
-
-    
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      * {
+        font-family: "DM Sans", sans-serif;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fundwarden | Features</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Figtree:ital,wght@0,300..900;1,300..900&family=Onest:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
-      href="{{url_for('static',filename='dist/main.css')}}"
+      href="{{ url_for('static', filename='dist/features.css') }}"
     />
-    {% extends "base.html" %}
-    {% block title %} Fundwarden: Features {% endblock %}
-
-    {% block content %}
-    
-
-    <div class="flex items-center justify-center bg-linear-to-r from-emerald-800 via-indigo-800 to-emerald-800">
-    <section class="h-[calc(100vh-100px)] relative mt-[550px] sm:mt-[400px]  lg:mt-[250px] bg-linear-to-r from-emerald-800 via-indigo-800 to-emerald-800">
-    <div class="p-6 sm:h-full flex flex-col justify-center items-center relative text-sm sm:text-base h-full">
-        
-        <div class="text-center flex flex-col  w-full mb-8">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-300 ">Financial Guardrails for Your Future</h2>
-            <p class="text-slate-100 max-w-2xl mx-auto mt-2.5">Fundwarden isn't just a list of expenses. It's a complete system designed to keep your spending in check and your savings on track.</p>
-        </div>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-6 sm:mb-20 pb-[80px] bg-transparent w-[93%]">
-            
-            <div class="p-8 rounded-2xl border border-slate-100 bg-gray-800 hover:border-emerald-200 transition-all duration-300 group">
-                <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-6 group-hover:bg-emerald-500 transition-colors duration-300">
-                    <span class="text-emerald-600 group-hover:text-white text-xl">💰</span>
-                </div>
-                <h3 class="text-xl font-bold text-gray-300 mb-3">Dynamic Income Control</h3>
-                <p class="text-slate-100 leading-relaxed">
-                    Set your monthly salary to establish your baseline. Got a raise? Easily increase your monthly income to scale your budget categories instantly.
-                </p>
-            </div>
-
-            <div class="p-8 rounded-2xl border border-slate-100 bg-gray-800 hover:border-indigo-200 transition-all duration-300 group">
-                <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-6 group-hover:bg-indigo-500 transition-colors duration-300">
-                    <span class="text-indigo-600 group-hover:text-white text-xl">📂</span>
-                </div>
-                <h3 class="text-xl font-bold text-gray-300 mb-3">Custom Envelopes</h3>
-                <p class="text-slate-100 leading-relaxed">
-                    Allocate your funds into specific categories. From rent to recreation, give every rupee a job before the month even begins.
-                </p>
-            </div>
-
-            <div class="p-8 rounded-2xl border border-slate-100 bg-gray-800 hover:border-red-200 transition-all duration-300 group">
-                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-6 group-hover:bg-red-500 transition-colors duration-300">
-                    <span class="text-red-600 group-hover:text-white text-xl">🛡️</span>
-                </div>
-                <h3 class="text-xl font-bold text-gray-300 mb-3">Enforced Limits</h3>
-                <p class="text-slate-100 leading-relaxed">
-                    Our "Hard Ceiling" logic prevents you from allocating more than you earn. Stay debt-free by working only with what you actually have.
-                </p>
-            </div>
-
-        </div>
+  </head>
+  <body class="bg-[#262626] text-gray-200 antialiased font-DMSans">
+    <div
+      class="fixed top-18 w-full z-50 flex flex-col items-center gap-2"
+      id="msgDiv"
+    >
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %} {% if category ==
+      "danger" %}
+      <div
+        class="alert alert-{{ category }} alert-dismissible text-black font-bold bg-red-200 border-2 border-red-500 px-12 py-3"
+        role="alert"
+      >
+        {{ message }}
+      </div>
+      {% elif category == "success" %}
+      <div
+        class="px-12 py-3 alert alert-{{ category }} alert-dismissible text-black font-bold bg-green-300 border-2 border-green-700"
+        role="alert"
+      >
+        {{ message }}
+      </div>
+      {% else %}
+      <div
+        class="px-12 py-3 alert alert-{{ category }} alert-dismissible text-black font-bold bg-yellow-200 border-2 border-yellow-500"
+        role="alert"
+      >
+        {{ message }}
+      </div>
+      {% endif %} {% endfor %} {% endif %} {% endwith %}
     </div>
-</section>
+    <nav
+      class="bg-[#3b3939] text-white flex items-center fixed w-full md:h-[70px] md:justify-evenly md:flex hidden md:text-2xl top-0 z-20"
+    >
+      <div class="h-full flex justify-center items-center relative">
+        <a href="#" class="h-full flex items-center pr-2">
+          <img src="https://i.ibb.co/Q3bLVMg7/logo.png" alt="logo" border="0" />
+        </a>
+      </div>
+
+      <div
+        id="nav-menu"
+        class="h-full flex justify-center items-center text-2xl"
+      >
+        {% if current_user.is_authenticated %}
+        <a
+          href="{{ url_for('core.index') }}"
+          class="text-[1.1rem] py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out"
+          >Dashboard</a
+        >
+        {% else %}
+        <a
+          href="{{url_for('auth.index')}}"
+          class="text-[1.1rem] py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out"
+          >Home</a
+        >
+        {% endif %}
+        <a
+          href="{{ url_for('auth.features') }}"
+          class="text-[1.1rem] py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out"
+          >Features</a
+        >
+
+        <a
+          href="{{ url_for('auth.credits') }}"
+          class="text-[1.1rem] py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out"
+          >Credits</a
+        >
+      </div>
+
+      <div id="auth" class="flex gap-[10px] mr-[0px] relative">
+        {% if current_user.is_authenticated %}
+        <a
+          href="{{ url_for('auth.logout') }}"
+          class="py-[4px] w-[105px] text-center rounded-[50px] text-[1.1rem] flex justify-center items-center bg-[#de0101] border-2 border-[#de0101] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
+          >Logout</a
+        >
+        {% else %}
+        <a
+          href="{{ url_for('auth.login') }}"
+          class="py-[4px] w-[105px] text-center rounded-[50px] text-[1.1rem] flex justify-center items-center bg-[#029c75] border-2 border-[#029c75] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
+          >Login</a
+        >
+        <a
+          href="{{ url_for('auth.register') }}"
+          class="py-[4px] w-[105px] text-center rounded-[50px] text-[1.1rem] flex justify-center items-center bg-indigo-700 border-2 border-indigo-700 hover:bg-transparent transition delay-50 duration-300 ease-in-out"
+          >Register</a
+        >
+        {% endif %}
+      </div>
+
+      <button
+        id="hamburger-btn"
+        class="bg-blue-500 cursor-pointer p-[20px] md:hidden"
+        onclick="handleMenu()"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </nav>
+
+    <!--Mobile Navbar-->
+    <nav
+      class="fixed md:hidden flex bg-[#3b3939] flex-col text-white w-full z-10"
+    >
+      <div
+        id="navTop"
+        class="flex justify-between bg-[#3b3939] md:hidden border-black fixed w-full top-0 h-[80px]"
+      >
+        <a
+          href="#"
+          class="p-[20px] relative left-[40px] h-full flex items-center"
+        >
+          <img
+            src="https://i.ibb.co/Q3bLVMg7/logo.png"
+            alt="Logo"
+            id="logo-image"
+          />
+        </a>
+        <button
+          id="hamburger-btn"
+          class="cursor-pointer p-[20px] md:hidden relative right-[40px] flex items-center"
+          onclick="handleMenu()"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+
+      <div
+        id="navContent"
+        class="w-full bg-[#3b3939] flex flex-col hidden fixed inset-0 justify-center"
+      >
+        <div
+          id="navTop"
+          class="flex justify-between bg-[#3b3939] md:hidden border-black fixed w-full top-0 h-[80px]"
+        >
+          <a
+            href="#"
+            class="p-[20px] h-full flex items-center relative left-[40px]"
+          >
+            <img
+              src="https://i.ibb.co/Q3bLVMg7/logo.png"
+              alt="Logo"
+              id="logo-image"
+            />
+          </a>
+          <button
+            id="hamburger-btn"
+            class="cursor-pointer p-[20px] md:hidden relative right-[40px] flex items-center"
+            onclick="handleMenu()"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
         </div>
-    {% endblock %}
+
+        <div id="openedNavContent" class="bg-yellow-00 flex flex-col">
+          <div id="navMiddle" class="w-full">
+            {% if current_user.is_authenticated %}
+            <a
+              href="{{ url_for('core.index') }}"
+              class="border-t-1 border-[#5d5c5e] text-[1.1rem] py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out w-full flex justify-center mb-[0px]"
+              >Dashboard</a
+            >
+            {% else %}
+            <a
+              href="{{url_for('auth.index')}}"
+              class="border-t-1 border-[#5d5c5e] text-[1.1rem] py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out w-full flex justify-center mb-[0px]"
+              >Home</a
+            >
+            {% endif %}
+            <a
+              href="{{ url_for('auth.features') }}"
+              class="border-t-1 border-[#5d5c5e] text-[1.1rem] py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out w-full flex justify-center mb-[0px]"
+              >Features</a
+            >
+
+            <a
+              href="{{ url_for('auth.credits') }}"
+              class="border-t-1 border-b-1 border-[#5d5c5e] text-[1.1rem] py-[10px] px-[12px] hover:text-[#5eefff] transition delay-50 duration-300 ease-in-out w-full flex justify-center mb-[0px]"
+              >Credits</a
+            >
+          </div>
+
+          <div
+            id="navBottom"
+            class="flex gap-[15px] justify-center relative items-center relative w-full mt-[42px]"
+          >
+            {% if current_user.is_authenticated == True %}
+            <a
+              href="{{ url_for('auth.logout') }}"
+              class="py-[4px] w-[105px] text-center rounded-[50px] text-[1.1rem] flex justify-center items-center bg-[#de0101] border-2 border-[#de0101] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
+              >Logout</a
+            >
+            {% else %}
+            <a
+              href="{{ url_for('auth.login') }}"
+              class="py-[4px] w-[105px] text-center rounded-[50px] text-[1.1rem] flex justify-center items-center bg-[#029c75] border-2 border-[#029c75] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
+              >Login</a
+            >
+            <a
+              href="{{ url_for('auth.register') }}"
+              class="py-[4px] w-[105px] text-center rounded-[50px] text-[1.1rem] flex justify-center items-center bg-[#8624ff] border-2 border-[#8624ff] hover:bg-transparent transition delay-50 duration-300 ease-in-out"
+              >Register</a
+            >
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+    <main class="min-h-screen w-full py-20 px-6 flex flex-col items-center">
+      <header class="text-center mb-24 mt-0">
+        <h1
+          class="text-4xl md:text-6xl font-black text-white tracking-tighter mb-6 mt-15"
+        >
+          Financial Guardrails
+        </h1>
+        <p
+          class="text-gray-400 max-w-2xl mx-auto text-lg md:text-xl leading-relaxed"
+        >
+          Fundwarden is a complete system designed to keep your spending in
+          check and your savings on track.
+        </p>
+      </header>
+
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl"
+      >
+        <div
+          class="bg-[#0f0f0f] border border-white/5 p-8 rounded-[2rem] hover:border-emerald-500/50 transition-all group"
+        >
+          <div
+            class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-8 text-2xl group-hover:scale-110 transition-transform"
+          >
+            💰
+          </div>
+          <h3 class="text-2xl font-bold text-white mb-4">Dynamic Income</h3>
+          <p class="text-gray-400 leading-relaxed">
+            Set your monthly salary to establish your baseline. Easily scale
+            your budget categories instantly when your income changes.
+          </p>
+        </div>
+
+        <div
+          class="bg-[#0f0f0f] border border-white/5 p-8 rounded-[2rem] hover:border-indigo-500/50 transition-all group"
+        >
+          <div
+            class="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-8 text-2xl group-hover:scale-110 transition-transform"
+          >
+            📂
+          </div>
+          <h3 class="text-2xl font-bold text-white mb-4">Custom Envelopes</h3>
+          <p class="text-gray-400 leading-relaxed">
+            Allocate your funds into specific categories. From rent to
+            recreation, give every rupee a job before the month even begins.
+          </p>
+        </div>
+
+        <div
+          class="bg-[#0f0f0f] border border-white/5 p-8 rounded-[2rem] hover:border-red-500/50 transition-all group"
+        >
+          <div
+            class="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center mb-8 text-2xl group-hover:scale-110 transition-transform"
+          >
+            🛡️
+          </div>
+          <h3 class="text-2xl font-bold text-white mb-4">Enforced Limits</h3>
+          <p class="text-gray-300 leading-relaxed">
+            Our "Hard Ceiling" logic prevents you from allocating more than you
+            earn. Stay debt-free by working with what you have.
+          </p>
+        </div>
+      </div>
+
+      <footer class="mt-24 text-center">
+        <p class="text-gray-500 text-sm mb-6">Ready to take control?</p>
+        <a
+          href="{{url_for('auth.register')}}"
+          class="px-10 py-3 bg-emerald-600 border-3 border-emerald-600 hover:bg-emerald-600 text-white font-bold rounded-md transition-all hover:text-white hover:bg-transparent hover:border-3 hover:border-emerald-600 shadow-2xl"
+        >
+          Get Started Now
+        </a>
+      </footer>
+    </main>
+  </body>
   <script
     src="https://kit.fontawesome.com/a3d72c8bc7.js"
     crossorigin="anonymous"
@@ -65,6 +311,13 @@
       const navContent = document.getElementById("navContent");
       navContent.classList.toggle("hidden");
     };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => {
+        const msgDiv = document.getElementById("msgDiv");
+        msgDiv.style.transition = "0.7s ease";
+        msgDiv.style.top = "-600px";
+      }, 3500);
+    });
   </script>
-  <!-- <script src=".../Static/js/script.js"></script> -->
 </html>
