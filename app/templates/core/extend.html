@@ -1,26 +1,56 @@
 {% extends "core/index.html" %} {% block title %} Add Cash {% endblock %} {%
 block appName %} Extend Budgets {% endblock %} {% block mainContent %}
-<form action="{{url_for('core.extend')}}" method="POST" class="addCashSection pl-6 pt-6 h-full" id="form">
-  <div class="w-[40%] flex flex-col h-full gap-3">
-  <p class="text-gray-200 text-[19px]">Choose Category to Extend Budget</p>
-  <div>  
-    <select name="category" id="category" class="text-white border-2 border-white w-full p-2.5 value={{category if category else ''}}">
-        <option value="" selected disabled hidden>Choose a Category</option>
-        {% for c in categories %}
-          {% if category == c.name %}
-            <option value="{{c.name}}" selected class="bg-[#101828]">{{c.name}}</option>
+<div class="bg-transparent">
+  <form
+    action="{{url_for('core.extend')}}"
+    method="POST"
+    class="addCashSection pl-6 pt-6 h-full bg-cardDark rounded-md rounded-t-none pb-8"
+    id="form"
+  >
+    <div class="w-[40%] flex flex-col h-full gap-3">
+      <p class="text-gray-200 text-base w-[170%]">
+        Choose Category to Extend Budget
+      </p>
+      <div>
+        <select
+          name="category"
+          id="category"
+          class="text-white w-[170%] border-2 border-white p-2.5 value={{category if category else ''}}"
+        >
+          <option value="" selected disabled hidden class="text-base">
+            Choose a Category
+          </option>
+          {% for c in categories %} {% if category == c.name %}
+          <option
+            class="text-base"
+            value="{{c.name}}"
+            selected
+            class="bg-[#101828]"
+          >
+            {{c.name}}
+          </option>
           {% else %}
-            <option value="{{c.name}}" class="bg-[#101828]">{{c.name}}</option>
-            {% endif %}
-        {% endfor %}
-    </select>
-    <p class="text-white mt-4">Extension Amount</p>
-    <input type="number" name="extension" id="extension" class="formInput mt-2 text-white" min="0" value="{{extension if extension else ''}}">
-</div>
+          <option value="{{c.name}}" class="bg-[#101828]">{{c.name}}</option>
+          {% endif %} {% endfor %}
+        </select>
+        <p class="text-white mt-4 w-[170%]">Extension Amount</p>
+        <input
+          type="number"
+          name="extension"
+          id="extension"
+          class="formInput mt-2 text-white w-[170%]"
+          min="0"
+          value="{{extension if extension else ''}}"
+        />
+      </div>
 
-  <div>
-    <button type="submit" class=" bg-emerald-600 px-[30px] text-white py-[10px] mt-[10px] border-2 border-white box-border hover:bg-emerald-800 cursor-pointer font-bold text-[17px]">Extend Budget</button>
+      <button
+        type="submit"
+        class="bg-emerald-600 px-[30px] text-white md:py-[10px] py-[8px] md:mt-[10px] mt-[6px] border-2 border-white box-border hover:bg-emerald-800 cursor-pointer font-bold text-[17px] w-[170%] rounded-md"
+      >
+        Extend Budget
+      </button>
+    </div>
+  </form>
 </div>
-  
-</form>
 {% endblock %}
