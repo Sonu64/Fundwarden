@@ -43,7 +43,7 @@ def login():
             flash("E-Mail does not exist !", "danger")
             return render_template('auth/login.html', email = email, password = "")
         hashedPassword = userRow.password
-        # Check hashed password
+        # Check hashed password ------- INVALID SALT ERROR !!!!!!!!!
         passwordMatched = bcrypt.check_password_hash(hashedPassword, password)
         # Password doesn't match
         if not passwordMatched:
@@ -242,7 +242,7 @@ def confirmEmail(token):
         # Process of putting Data in Database
         email = payload['email']
         name = payload['name']
-        hashedPassword = bcrypt.generate_password_hash(payload['password'])
+        hashedPassword = bcrypt.generate_password_hash(payload['password']).decode('utf-8')
         userObject = User(email=email, name=name, password=hashedPassword, balance=0)
         try:
             db.session.add(userObject)
