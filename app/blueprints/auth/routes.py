@@ -22,6 +22,9 @@ def index():
 #
 @auth.route("/login", methods = ['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        flash("You are already Logged In !", 'info')
+        return redirect(url_for('core.index'))
     if req.method == 'GET':
         return render_template('auth/login.html', email = "", password = "")
     elif req.method == 'POST':
@@ -58,6 +61,9 @@ def login():
 # url_for('core.register') ---> Points to the register route handler of the Core BP. 
 @auth.route("/register", methods = ['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        flash("You are already Logged In !", 'info')
+        return redirect(url_for('core.index'))
     if req.method == 'GET':
         return render_template('auth/register.html', email="", name="", password="", confirm="")
     elif req.method == 'POST':
@@ -110,6 +116,7 @@ def register():
     
 
 @auth.route("logout")
+@login_required
 def logout():
     logout_user()
     flash("Logged Out Successfuly !", "success")
@@ -118,6 +125,9 @@ def logout():
 
 @auth.route("forgotPassword", methods = ['GET', 'POST'])
 def forgotPassword():
+    if current_user.is_authenticated:
+        flash("You are already Logged In, Please Logout to reset password !", 'info')
+        return redirect(url_for('core.index'))
     if req.method == 'GET':
         return render_template('auth/forgot.html', email = "")
     elif req.method == 'POST':
@@ -147,6 +157,9 @@ def forgotPassword():
 
 @auth.route("resetPassword/<token>", methods = ['GET', 'POST'])
 def resetPassword(token):
+    if current_user.is_authenticated:
+        flash("You are already Logged In !", 'info')
+        return redirect(url_for('core.index'))
     email = User.verifyResetToken(token) # Decode the E-Mail part from the token
     user = User.query.filter(User.email == email).first()
     
