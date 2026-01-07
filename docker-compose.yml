@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:15
+    container_name: fundwarden_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 077800
+      POSTGRES_DB: fundwarden_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    container_name: fundwarden_app
+    ports:
+      - "5000:5000"
+    environment:
+      # --- Database Configuration ---
+      - SQLALCHEMY_DATABASE_URI=postgresql://postgres:077800@host.docker.internal:5432/fundwarden
+
+      # --- Security ---
+      - SECRET_KEY=4734b048cc73291c679beabc581c2d7729b84902f694b19d6ecb05b5324454a3
+
+      # --- Mail Configuration ---
+      - MAIL_SERVER=smtp.gmail.com
+      - MAIL_PORT=587
+      - MAIL_USE_TLS=True
+      - MAIL_USERNAME=sonusantu64@gmail.com
+      - MAIL_PASSWORD="tqfn jbqx eobl gxga"
+
+      # --- Flask Settings ---
+      - FLASK_DEBUG=1
+
+    # This allows the container to resolve 'host.docker.internal'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  postgres_data:

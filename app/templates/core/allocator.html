@@ -2,8 +2,8 @@
 %} {% block appName %} Budget Allocator{% endblock %} {% block mainContent %}
 
 <div class="flex rounded-md rounded-t-none">
-<div class="container flex flex-col mb-[200px] md:mb-0 md:flex-row items-center justify-evenly bg-cardDark w-full rounded-md rounded-t-none">
-<form action="{{url_for('core.createCategory')}}" method="POST" class="overflow-hidden h-[300px] min-h-[300px] text-white p-0  w-full md:w-[60%] h-full bg-cardDark rounded-md rounded-t-none" id="form">
+<div class="container flex flex-col mb-[200px] sm:mb-[100px] md:flex-row items-center justify-evenly bg-cardDark w-full rounded-md rounded-t-none">
+<form action="{{url_for('core.createCategory')}}" method="POST" class="overflow-hidden h-[300px] min-h-[300px] text-white p-0  w-full md:w-[60%] h-full bg-cardDark rounded-md rounded-t-none " id="form">
   <h3 class="border-b-gray-600 p-[16px] border-b-2 font-bold text-yellow-300">Create a Category and allocate budgets</h3>
   <p class="mb-[4px] mt-[20px] px-[16px]">Category Name</p>
   <input
@@ -43,12 +43,14 @@
             {% for category in categoriesList %}
                   <div class="flex w-full border-b-2 border-b-gray-900">
                         <p class="w-full  p-[16px] border-r-2 border-r-gray-900">{{category.name}}</p>
-                        <p class="w-full  p-[16px]">{{category.budget}}</p>
+                        <p class="w-full  p-[16px] text-lime-400 font-bold text-xl">₹ {{category.budget}}</p>
                   </div>
             {% endfor %}
         </div>
-<div class="extendBtn p-2.5 pb-0 pl-0 flex items-end mb-[20px]  justify-center">
-  <a href={{url_for('core.extend')}} class="text-yellow-300 font-bold border-2 border-white p-2 px-8 bg-transparent hover:bg-yellow-300 hover:border-yellow-300 hover:text-black mt-2.5">Extend Budgets</a>
+<div class="extendBtn p-2.5 w-full flex-row sm:flex-col items-center justify-center mb-[0px] bg-transparent justify-center">
+  <a href={{url_for('core.extend')}} class="text-white font-bold border-2 border-white p-2 px-8  hover:bg-transparent white  block text-center bg-[#ea0046]  hover:border-[#ea0046] transition duration-300 transition-ease">Extend Budgets</a>
+  
+  <a href={{url_for('core.reduce')}} class="text-white font-bold border-2 border-white p-2 px-8 block text-center  hover:bg-transparent hover:text-white mt-2.5 block bg-[#00a0f0] hover:border-[#00a0f0] transition duration-300 transition-ease">Reduce Budgets</a>
 </div></section>
 
 

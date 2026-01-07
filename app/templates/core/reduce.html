@@ -1,15 +1,15 @@
-{% extends "core/index.html" %} {% block title %} Extend Budgets {% endblock %}
-{% block appName %} Extend Budgets {% endblock %} {% block mainContent %}
+{% extends "core/index.html" %} {% block title %} Reduce Budgets {% endblock %}
+{% block appName %} Reduce Budgets {% endblock %} {% block mainContent %}
 <div class="bg-transparent">
   <form
-    action="{{url_for('core.extend')}}"
+    action="{{url_for('core.reduce')}}"
     method="POST"
     class="addCashSection pl-6 pt-6 h-full bg-cardDark rounded-md rounded-t-none pb-8"
     id="form"
   >
     <div class="w-[40%] flex flex-col h-full gap-3">
       <p class="text-gray-200 text-base w-[170%]">
-        Choose Category to Extend Budget
+        Choose Category to Reduce Budget
       </p>
       <div>
         <select
@@ -33,14 +33,14 @@
           <option value="{{c.name}}" class="bg-[#101828]">{{c.name}}</option>
           {% endif %} {% endfor %}
         </select>
-        <p class="text-white mt-4 w-[170%]">Extension Amount</p>
+        <p class="text-white mt-4 w-[170%]">Decrease Amount</p>
         <input
           type="number"
-          name="extension"
-          id="extension"
+          name="reduction"
+          id="reduction"
           class="formInput mt-2 text-white w-[170%]"
           min="0"
-          value="{{extension if extension else ''}}"
+          value="{{reduction if reduction else ''}}"
         />
       </div>
 
@@ -48,7 +48,7 @@
         type="submit"
         class="bg-emerald-600 px-[30px] text-white md:py-[10px] py-[8px] md:mt-[10px] mt-[6px] border-2 border-white box-border hover:bg-emerald-800 cursor-pointer font-bold text-[17px] w-[170%] rounded-md"
       >
-        Extend Budget
+        Decrease Budget
       </button>
     </div>
   </form>

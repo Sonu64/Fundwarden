@@ -20,8 +20,9 @@
                     <h2 class="bg-gray-900 text-white w-full pl-6 p-5 text-xl">Monthly Balance: <span class="text-yellow-500 font-bold text-2xl"> ₹ {{current_user.balance}}</span></h2>
                     <div class="actions flex flex-col gap-2 w-full">
                       <a href={{url_for('core.add')}} class="actionBtn bg-emerald-600 text-white font-bold">Add or Extend Monthly Balance</a>
-                      <a href={{url_for('core.tracker')}} class="actionBtn bg-orange-600 text-white font-bold">Expense Tracker</a>
+                      <a href={{url_for('core.tracker')}} class="actionBtn bg-pink-500 text-white font-bold">Expense Tracker</a>
                       <a href={{url_for('core.allocator')}} class="actionBtn bg-purple-600 font-bold text-white">Budget Allocator</a>
+                      <a href={{url_for('core.deleteCategory')}} class="actionBtn bg-red-500 font-bold text-white">Delete Categories</a>
                     </div>
                 </section>
                 

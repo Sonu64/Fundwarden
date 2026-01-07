@@ -171,6 +171,75 @@ def createCategory():
         return "Invalid Request !"
 
 
+
+@core.route("deleteCategory", methods=["GET", "POST"])
+@login_required
+def deleteCategory():
+    if req.method == "GET":
+        # Possible only through Redirects to url_for('core.createCategory')
+        return render_template('core/deleteCategory.html', categoriesList = giveCategoriesListOfDicts())  # category and budget handled by IF jinja syntax in core/allocator.html, same for categoriesList, these values can only be added by render_template, not redirect()
+    elif req.method == "POST":
+        categoryName = req.form.get("category")
+        categoriesList = giveCategoriesListOfDicts()
+   
+        try:
+            if categoryName.strip() == "":
+                flash("Please Provide a Category name !", "danger")
+                return render_template(
+                    "core/deleteCategory.html",
+                    categoriesList=categoriesList,
+                    category=""
+                )
+        except:
+            flash("Please Provide Valid Values !", "danger")
+            return render_template(
+                    "core/deleteCategory.html",
+                    categoriesList=categoriesList,
+                    category=""
+                )
+
+        categoryName = categoryName.strip()
+
+        categoryObj = Categories.query.filter_by(userID = current_user.id, name = categoryName).first()
+        amountToBeAdded = categoryObj.budget
+        current_user.balance += amountToBeAdded
+
+        db.session.delete(categoryObj)
+        db.session.commit()
+
+        flash(f"Successfuly Deleted Category {categoryName}, Refunded ₹{amountToBeAdded} to your monthly Balance !", "success")
+        return redirect(url_for("core.index"))
+
+    else:
+        return "Invalid Request !"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @core.route("extend", methods=["GET", "POST"])
 @login_required
 def extend():
@@ -258,6 +327,95 @@ def extend():
 
 
 
+@core.route("reduce", methods=["GET", "POST"])
+@login_required
+def reduce():
+    categoriesList = giveCategoriesListOfDicts()
+    if req.method == "GET":
+        return render_template(
+            "core/reduce.html",
+            categories=categoriesList,
+            category="",
+            reduction="",
+        )
+    elif req.method == "POST":
+        try:
+            category = str(req.form.get("category"))
+            reduction = int(req.form.get("reduction"))
+        except (ValueError, TypeError):
+            flash("Numeric Value needed !", "danger")
+            return render_template(
+                "core/reduce.html",
+                categories=categoriesList,
+                category="",
+                reduction="",
+            )
+
+
+        for c in categoriesList:
+            if c['name'] == category:
+                targetCategory = c
+        
+        if reduction > targetCategory['budget']:
+            flash("Can't Reduce beyond current budget !", "danger")
+            return render_template(
+                "core/extend.html",
+                categories=categoriesList,
+                category=category,
+                reduction="",
+            )
+        
+
+        if not category or category.strip() == "":
+            flash("Please Choose a Category !", "danger")
+            return render_template(
+                "core/extend.html",
+                categories=categoriesList,
+                category="",
+                reduction=reduction,
+            )
+        if reduction == 0:
+            flash("Please Give a Valid Reduction amount !", "danger")
+            return render_template(
+                "core/extend.html",
+                categories=categoriesList,
+                category=category,
+                reduction="",
+            )
+
+        filteredCategory = Categories.query.filter(
+            Categories.name == category, Categories.userID == current_user.id
+        ).first()
+        # .first() or .all() is ALWAYS needed !!!!!!
+        # .all() gives a List of Category Objects ---> all objects are Live Copies from the DB
+        # .first() gives a Single Category Object ---> all objects are Live Copies from the DB
+
+        if not filteredCategory:
+            flash("Error while fetching category name !", "danger")
+            return redirect(url_for("core.allocator"))
+
+        
+        filteredCategory.budget -= int(reduction)
+        filteredCategory.remaining -= int(reduction)
+        current_user.balance += int(reduction)
+
+        # db.session.add(filteredCategory) # No need as filteredCategory is a Live Copy of the Row, though
+        # db.session.commit() is needed as below
+        try:
+            db.session.commit()
+            flash(
+                f"Reduced your Budget for {filteredCategory.name} !",
+                "success",
+            )
+            return redirect(url_for("core.allocator"))
+        except:
+            flash("Some Error Occured !", "danger")
+            return redirect(url_for("core.allocator"))
+    else:
+        return "Invalid Request"
+
+
+
 
 
 
@@ -341,6 +499,36 @@ def addExpense():
             return redirect(url_for("core.tracker"))
     else:
         return "Invalid Request !"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
