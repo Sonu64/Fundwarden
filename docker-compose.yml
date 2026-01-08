@@ -14,6 +14,9 @@ services:
   web:
     build: .
     container_name: fundwarden_app
+    env_file:
+      - .env
+    image: fundwarden_docker_app:latest # <--- ADD THIS LINE
     depends_on:
       - db # Tells Docker to start the DB first
     ports:
@@ -34,6 +37,7 @@ services:
 
       # --- Flask Settings ---
       - FLASK_DEBUG=1
+      - FLASK_APP=run.py # This tells Flask: "Open app.py and run create_app()"
 
     # This allows the container to resolve 'host.docker.internal'
     extra_hosts:

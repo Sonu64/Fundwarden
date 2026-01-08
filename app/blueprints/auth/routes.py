@@ -178,11 +178,11 @@ def resetPassword(token):
         
         if not re.match(passwordRegex, password):
             flash("Password must contain more than 6 characters, at least One uppercase letter, a number and a special character !", 'danger')
-            return render_template('auth/reset.html', token = token, password = "", confirm = confirm)
+            return render_template('auth/reset.html', token = token, password = "", confirm = "")
         
         if password != confirm:
             flash("Passwords Don't match !", "danger")
-            return render_template('auth/reset.html', token = token, password = "", confirm = confirm)
+            return render_template('auth/reset.html', token = token, password = "", confirm = "")
             
         hashedPassword = bcrypt.generate_password_hash(password).decode('utf-8')
         user.password = hashedPassword

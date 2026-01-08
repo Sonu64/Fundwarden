@@ -19,6 +19,7 @@ database_address = os.environ.get('SQLALCHEMY_DATABASE_URI')
 db = SQLAlchemy() # DB Instance globally
 bcrypt = Bcrypt() # Bcrypt Instance globally
 mail = Mail()
+migrate = Migrate()
 
 # Factory function
 def create_app():
@@ -58,6 +59,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix = "/")
     app.register_blueprint(core, url_prefix = '/app')
     
-    migrate = Migrate(app, db)
+    # Replace 'migrate = Migrate(app, db)' with:
+    migrate.init_app(app, db)
     
     return app
