@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npx @tailwindcss/cli -i app/static/src/features_src.css -o app/static/dist/features.css --content app/templates/**/*.html --watch\" \"npx @tailwindcss/cli -i app/static/src/input.css -o app/static/dist/main.css --content app/templates/**/*.html --watch\"",
-    "build": "npx @tailwindcss/cli -i \"app/static/src/features_src.css\" -o \"app/static/dist/features.css\" --content \"app/templates/**/*.html\" & npx @tailwindcss/cli -i \"app/static/src/input.css\" -o \"app/static/dist/main.css\" --content \"app/templates/**/*.html\" "
+    "build": "concurrently \"npx @tailwindcss/cli -i app/static/src/features_src.css -o app/static/dist/features.css --content app/templates/**/*.html\" \"npx @tailwindcss/cli -i app/static/src/input.css -o app/static/dist/main.css --content app/templates/**/*.html\""
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/Sonu64/Fundwarden#readme",
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.18",
+    "concurrently": "^9.2.1",
     "tailwindcss": "^4.1.18"
   }
 }

@@ -4,7 +4,7 @@ services:
     container_name: fundwarden_db
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 077800
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: fundwarden_db
     ports:
       - "5432:5432"
@@ -14,21 +14,23 @@ services:
   web:
     build: .
     container_name: fundwarden_app
+    depends_on:
+      - db # Tells Docker to start the DB first
     ports:
       - "5000:5000"
     environment:
       # --- Database Configuration ---
-      - SQLALCHEMY_DATABASE_URI=postgresql://postgres:077800@host.docker.internal:5432/fundwarden
+      - SQLALCHEMY_DATABASE_URI=postgresql://postgres:${DB_PASSWORD}@db:5432/fundwarden_db
+      # Don't use @localhost above. Keep @localhost for python run.py and keep @db for Production using Docker.
 
       # --- Security ---
-      - SECRET_KEY=4734b048cc73291c679beabc581c2d7729b84902f694b19d6ecb05b5324454a3
-
+      - SECRET_KEY=${SECRET_KEY}
       # --- Mail Configuration ---
-      - MAIL_SERVER=smtp.gmail.com
-      - MAIL_PORT=587
-      - MAIL_USE_TLS=True
-      - MAIL_USERNAME=sonusantu64@gmail.com
-      - MAIL_PASSWORD="tqfn jbqx eobl gxga"
+      - MAIL_SERVER=${MAIL_SERVER}
+      - MAIL_PORT=${MAIL_PORT}
+      - MAIL_USE_TLS=${MAIL_USE_TLS}
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${APP_EMAIL_PASSWORD}
 
       # --- Flask Settings ---
       - FLASK_DEBUG=1
