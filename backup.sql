@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict nnRMEWqvGB4QHxfI5YosOau6HgZ5pT007IlXMH1r6GavNIpwxo5NaOTPakFXZLo
+\restrict utJoF9ykOtILleftlhfBmOU96dpnqLJy9fachrneWQmKGtkwPZowSCGcSHrv6DG
 
 -- Dumped from database version 15.15 (Debian 15.15-1.pgdg13+1)
 -- Dumped by pg_dump version 15.15 (Debian 15.15-1.pgdg13+1)
@@ -127,7 +127,8 @@ ALTER TABLE ONLY public."Users" ALTER COLUMN id SET DEFAULT nextval('public."Use
 --
 
 COPY public."Categories" (id, "userID", name, budget, spent, remaining) FROM stdin;
-2	1	Education	250	50	200
+2	1	T.V	500	0	500
+1	1	Books	400	200	200
 \.
 
 
@@ -136,7 +137,7 @@ COPY public."Categories" (id, "userID", name, budget, spent, remaining) FROM std
 --
 
 COPY public."Users" (id, email, name, password, balance) FROM stdin;
-1	sourakantimandal@gmail.com	Sourakanti Mandal	$2b$12$kqn6Goa.ULTYlRwhZ/9SsOx87ukZM7ZE.z26BaOZeyEm7iI.i1zge	1000
+1	sourakantimandal@gmail.com	Sourakanti One	$2b$12$R1wJdxuXnWVbdwrr1IZIRumGIevCwgwwoSbTOY0TD41rEfpHBWOUi	100
 \.
 
 
@@ -145,7 +146,7 @@ COPY public."Users" (id, email, name, password, balance) FROM stdin;
 --
 
 COPY public.alembic_version (version_num) FROM stdin;
-30fcb05f926f
+1f8efcf132bf
 \.
 
 
@@ -153,7 +154,7 @@ COPY public.alembic_version (version_num) FROM stdin;
 -- Name: Categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Categories_id_seq"', 3, true);
+SELECT pg_catalog.setval('public."Categories_id_seq"', 2, true);
 
 
 --
@@ -199,5 +200,5 @@ ALTER TABLE ONLY public."Categories"
 -- PostgreSQL database dump complete
 --
 
-\unrestrict nnRMEWqvGB4QHxfI5YosOau6HgZ5pT007IlXMH1r6GavNIpwxo5NaOTPakFXZLo
+\unrestrict utJoF9ykOtILleftlhfBmOU96dpnqLJy9fachrneWQmKGtkwPZowSCGcSHrv6DG
 

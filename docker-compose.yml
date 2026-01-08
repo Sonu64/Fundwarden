@@ -15,29 +15,23 @@ services:
     build: .
     container_name: fundwarden_app
     env_file:
-      - .env
-    image: fundwarden_docker_app:latest # <--- ADD THIS LINE
+      - .env # This loads everything as a backup
+    image: fundwarden_docker_app:latest
     depends_on:
-      - db # Tells Docker to start the DB first
+      - db
     ports:
       - "5000:5000"
     environment:
-      # --- Database Configuration ---
+      # We MAP them here so Docker explicitly injects them from your .env
       - SQLALCHEMY_DATABASE_URI=postgresql://postgres:${DB_PASSWORD}@db:5432/fundwarden_db
-      # Don't use @localhost above. Keep @localhost for python run.py and keep @db for Production using Docker.
-
-      # --- Security ---
       - SECRET_KEY=${SECRET_KEY}
-      # --- Mail Configuration ---
       - MAIL_SERVER=${MAIL_SERVER}
       - MAIL_PORT=${MAIL_PORT}
       - MAIL_USE_TLS=${MAIL_USE_TLS}
       - MAIL_USERNAME=${MAIL_USERNAME}
       - MAIL_PASSWORD=${APP_EMAIL_PASSWORD}
-
-      # --- Flask Settings ---
       - FLASK_DEBUG=1
-      - FLASK_APP=run.py # This tells Flask: "Open app.py and run create_app()"
+      - FLASK_APP=run.py
 
     # This allows the container to resolve 'host.docker.internal'
     extra_hosts:
