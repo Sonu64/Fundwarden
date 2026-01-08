@@ -11,7 +11,9 @@ COPY . .
 
 # IMPORTANT: We run the CLI directly without --watch so the build can complete.
 # This creates the features.css file inside app/static/dist/
-RUN npx @tailwindcss/cli -i app/static/src/features_src.css -o app/static/dist/features.css --content 'app/templates/**/*.html'
+# Compiles the CSS once and moves to the next step
+RUN concurrently "npx @tailwindcss/cli -i app/static/src/features_src.css -o app/static/dist/features.css --content app/templates/**/*.html" "npx @tailwindcss/cli -i app/static/src/input.css -o app/static/dist/main.css --content app/templates/**/*.html"
+
 
 # --- STAGE 2: Backend (Flask + Postgres) ---
 FROM python:3.11-slim
@@ -37,7 +39,8 @@ COPY . .
 
 # Copy ONLY the compiled CSS from the frontend-builder stage
 # This ensures app/static/dist exists even if it's ignored locally
-COPY --from=frontend-builder /app/app/static/dist /app/app/static/dist
+# The trailing slashes tell Docker "Copy the contents of this folder into that folder"
+COPY --from=frontend-builder /app/app/static/dist/ /app/app/static/dist/
 
 # Expose the port Flask/Gunicorn will run on
 EXPOSE 5000
