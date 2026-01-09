@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, Flask, request as req, redirect, url_for, flash
+from flask import Blueprint, render_template, Flask, request as req, redirect, url_for, flash, current_app
 from flask import jsonify
 #Import DB and DB Models
 from app.app import db, bcrypt, mail
@@ -7,6 +7,11 @@ from app.blueprints.auth.models import User
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_mail import Message
 import re
+import sib_api_v3_sdk
+from sib_api_v3_sdk.rest import ApiException
+import os
+
+
 
 auth  = Blueprint('auth', __name__)
 
@@ -69,6 +74,7 @@ def register():
     elif req.method == 'POST':
         email = req.form.get("email")
         name = req.form.get("name")
+        name = name.strip()
         password = req.form.get("password")
         confirm = req.form.get("confirm")
         emailRegex  = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -78,7 +84,7 @@ def register():
             return render_template('auth/register.html', email = email, name = name, password = password, confirm = confirm)
         
         # Fullname regex
-        nameRegex = r"^[A-Z][a-z]*(?:[\s'-][A-Z][a-z]*)*$"
+        nameRegex = r"^[A-Z][a-z]*(?: [A-Z][a-z]*)+$"  r"^[A-Z][a-z]*(?: [A-Z][a-z]*)+$"
         passwordRegex = r"^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$"   
         
         
@@ -103,14 +109,43 @@ def register():
 
         ## When every condiition above doesn't hold true ##
         token = User.generateEmailConfirmToken(email, name, password) 
-        resetLink = url_for('auth.confirmEmail', token = token, _external = True)
+        confirmLink = url_for('auth.confirmEmail', token = token, _external = True)
         # Send Reset Link via E-Mail
-        msg = Message("E-Mail Confirmation Request", sender = "sonusantu64@gmail.com", recipients = [email])
-        msg.body = f"Fundwarden E-mail confirmation Link: {resetLink}"
-        mail.send(msg)
+        # --- BREVO API INTEGRATION ---
+        configuration = sib_api_v3_sdk.Configuration()
+        configuration.api_key['api-key'] = os.environ.get('BREVO_API_KEY')
+        api_instance = sib_api_v3_sdk.TransactionalEmailsApi(sib_api_v3_sdk.ApiClient(configuration))
+        # Construct the recipient and sender
+        to = [{"email": email, "name": name}]
+        sender = {"name": "Fundwarden", "email": current_app.config['MAIL_DEFAULT_SENDER']}
+        # 1. Create the message object
+        # Create the email object
+        send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
+            to=to,
+            sender=sender,
+            reply_to={"email": "sonusantu64@gmail.com", "name": "Fundwarden E-Mail Verification"},
+            subject="Verify Your Fundwarden Account",
+            html_content=f"""
+            <html>
+                <body>
+                    <h1>Welcome to Fundwarden!</h1>
+                    <p style = "font-size:18px;margin-bottom:40px;">Click the link below to Verify your E-Mail Address.</p>
+                    <a href="{confirmLink}" style="color:white;border: 2px solid white;background-color:#00a452;font-weight:bold;text-decoration:none; padding: 16px 18px;font-family:sans-serif;margin:20px 0;font-size:18px;">Confirm E-Mail Address</a>
+                    <p style="font-size:18px;margin-top:40px">If you did not request this, please ignore this email.</p>
+                </body>
+            </html>
+            """
+        )
 
-        flash("Please confirm your E-mail via the Link sent to the E-mail Address you provided 😊", 'info')
-        return redirect(url_for('auth.login')) 
+        try:
+            # This API call is much faster than SMTP and won't timeout
+            api_instance.send_transac_email(send_smtp_email)
+            flash("A Verification Link has been sent to your ✉︎ E-Mail. Please check your Inbox or Spam Folder.", "info")
+        except ApiException as e:
+            print(f"Exception when calling TransactionalEmailsApi->send_transac_email: {e}")
+            flash("Account created, but we had trouble sending the verification email.", "warning")
+        return redirect(url_for('auth.login'))
+        
     else:
         return "Invalid Request !"
     
@@ -136,22 +171,40 @@ def forgotPassword():
             flash("Please provide an E-Mail Address !", "danger")
             return render_template('auth/forgot.html', email = email)
         foundUser = User.query.filter(User.email == email).first() # self in non-static methods represents this Live Row from the Users Table
+        # Generate Reset Token, from user specific generateResetToken() function, which gets access to current user's email via self.email. But if we had made it a static method, we had to pass queried user from here. But being a normal method, it gets to user via self.
+        token = foundUser.generateResetToken() 
+        resetLink = url_for('auth.resetPassword', token = token, _external = True)
+        # --- BREVO API INTEGRATION ---
+        configuration = sib_api_v3_sdk.Configuration()
+        configuration.api_key['api-key'] = os.environ.get('BREVO_API_KEY')
+        api_instance = sib_api_v3_sdk.TransactionalEmailsApi(sib_api_v3_sdk.ApiClient(configuration))
+        
+        send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
+        to=[{"email": foundUser.email}],
+        sender={"name": "Fundwarden Support", "email": current_app.config['MAIL_DEFAULT_SENDER']},
+        reply_to={"email": "sonusantu64@gmail.com", "name": "Fundwarden Password Reset"},
+        subject="Password Reset Request",
+        html_content=f"""
+        <html>
+            <body>
+                <p style="font-size:18px;">You requested a Password Reset for your Fundwarden account.</p>
+                <p style = "font-size:18px;margin-bottom:40px;">Click the link below to set a new password:</p>
+                <a href="{resetLink}" style="color:white;border: 2px solid white;background-color:#ff6f00;font-weight:bold;text-decoration:none; padding: 16px 18px;font-family:sans-serif;margin:20px 0;font-size:18px;">Reset My Password</a>
+                <p style="font-size:18px;margin-top:40px">If you did not request this, please ignore this email.</p>
+            </body>
+        </html>
+        """
+    )
+
         try:
-            # Generate Reset Token, from user specific generateResetToken() function, which gets access to current user's email via self.email. But if we had made it a static method, we had to pass queried user from here. But being a normal method, it gets to user via self.
-            token = foundUser.generateResetToken() 
-            resetLink = url_for('auth.resetPassword', token = token, _external = True)
-            # Send Reset Link via E-Mail
-            msg = Message("Password Reset Request", sender = "sonusantu64@gmail.com", recipients = [email])
-            msg.body = f"Fundwarden Password Reset Link: {resetLink}"
-            mail.send(msg)
-            flash("Password Reset Link Sent to your E-Mail, please check your Inbox.", "info")
-            print("Mail Sent !")
-            return redirect(url_for('auth.login'))
-        except Exception as e:
-            flash("If any account with that E-Mail exists, Password Reset Link was sent to that E-Mail, please check your Inbox.", "info")
-            return render_template('auth/login.html', email = "", password = "")
+            api_instance.send_transac_email(send_smtp_email)
+            flash("A password reset link has been sent to your email.", "info")
+        except ApiException as e:
+            print(f"Error sending password reset: {e}")
+            flash("Could not send reset email. Please try again later.", "danger")
+        return redirect(url_for('auth.login'))
     else:
-        return "Invalid Request !"
+            return "Invalid Request !"
     
 
 

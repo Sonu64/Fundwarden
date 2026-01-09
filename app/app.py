@@ -15,18 +15,14 @@ migrate = Migrate()
 def create_app():
     app = Flask(__name__)
 
-    # --- Fetch variables INSIDE the function ---
+    # --- 1. App configuration ---
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    # --- Mail Configuration ---
-    app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER')
-    app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT', 587))
-    app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS') == 'True'
-    app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
-    app.config['MAIL_PASSWORD'] = os.environ.get('APP_EMAIL_PASSWORD')
-
+    # 2. Essential Config for Brevo API used in routes
+    app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER')
+    
     # --- Initialize Extensions ---
     db.init_app(app)
     bcrypt.init_app(app)

@@ -22,14 +22,14 @@ RUN npx concurrently \
 
 
 # --- STAGE 2: Backend (Flask + Postgres) ---
+# --- STAGE 2: Backend (Flask + Postgres) ---
 FROM python:3.11-slim
 
-# Prevent Python from writing .pyc files and ensure output is logged immediately
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 
-# Install system dependencies required for psycopg2 (Postgres) and Bcrypt
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     gcc \
@@ -40,19 +40,18 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the entire project into the container
-# ... (Stage 2 setup and pip install)
-
-# 1. Copy everything from your local folder (except what's in .dockerignore)
+# 1. Copy the entire project first
 COPY . .
 
-# 2. NOW inject the compiled CSS from the frontend-builder
-# This ensures that even if a 'dist' folder was copied in step 1, 
-# it is now explicitly replaced by the fresh production CSS.
+# 2. Inject the compiled CSS from Stage 1 (Overwrites any local dist folder)
 COPY --from=frontend-builder /app/app/static/dist/ /app/app/static/dist/
 
-# Expose the port Flask/Gunicorn will run on
+# 3. Setup the entrypoint script
+RUN chmod +x entrypoint.sh
+
+# 4. Final settings
 EXPOSE 5000
 
-# Run the app using Gunicorn (pointing to your run.py)
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "run:app"]
+# IMPORTANT: Only ONE CMD allowed. 
+# We use the entrypoint script so migrations run before the server starts.
+CMD ["./entrypoint.sh"]
