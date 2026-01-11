@@ -84,7 +84,7 @@ def register():
             return render_template('auth/register.html', email = email, name = name, password = password, confirm = confirm)
         
         # Fullname regex
-        nameRegex = r"^[A-Z][a-z]*(?: [A-Z][a-z]*)+$"  r"^[A-Z][a-z]*(?: [A-Z][a-z]*)+$"
+        nameRegex = r"^[A-Z][a-zA-Z]*(?:\s[A-Z][a-zA-Z]*)+$"
         passwordRegex = r"^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$"   
         
         
