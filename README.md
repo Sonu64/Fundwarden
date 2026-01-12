@@ -1,9 +1,3 @@
-Based on your current volume structure, it is clear that **Fundwarden** has matured into a sophisticated, multi-layered application. You’ve successfully separated your Python environment, Node.js assets (for Tailwind CSS), and a modular Flask core.
-
-Here is the updated `README.md` that accurately reflects this architecture.
-
----
-
 # Fundwarden: A Full-Stack Financial Management Solution
 
 ## Project Overview
@@ -84,7 +78,3 @@ I plan to evolve Fundwarden into a full React/Django stack and eventually bridge
 3. **Install JS Deps**: `npm install` (for Tailwind compilation)
 4. **Database**: `flask db upgrade`
 5. **Run**: `python run.py`
-
----
-
-**Next Step:** Your folder structure shows you are using **Python 3.14**. Since this is a very new/experimental version, would you like me to help you double-check your `Dockerfile` to ensure it uses the correct base image for this specific version on Render?
